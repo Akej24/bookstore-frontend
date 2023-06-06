@@ -1,0 +1,21 @@
+#nav{
+    margin-bottom: 60px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.61);
+}
+
+a {
+    display: inline-block;
+    width: 17%;
+    padding: 25px;
+    text-align: center;
+    text-decoration: none;
+}
+
+a:hover{
+    background-color: rgba(20, 69, 88, 0.836);
+}
+
+span {
+    color: rgba(255, 255, 255, 0.61);
+    text-transform: uppercase;
+}
