@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Nav from "./Nav";
-import "./css/BooksTable.css";
+import "../css/BooksTable.css";
 
 export default function BooksTable() {
 
   const [books, setBooks] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:8080/api/v1/books").then((response) => { setBooks(response.data); });
+    axios
+      .get("http://localhost:8080/api/v1/books")
+      .then(response => setBooks(response.data))
+      .catch(error => console.log(error));
   }, []);
 
   const onDeleteClick = async bookId=> {
@@ -25,6 +28,7 @@ export default function BooksTable() {
       <div id="table">
         <h1>Books table</h1>
         <table class="books-table">
+
           <tr>
             <th>Title</th>
             <th>Author</th>
@@ -37,6 +41,7 @@ export default function BooksTable() {
             <th>Edit</th>
             <th>Delete</th>
           </tr>
+
           {books.map((val, key) => {
             console.log(val);
             return (
@@ -54,6 +59,7 @@ export default function BooksTable() {
               </tr>
             )
           })}
+
         </table>
       </div>
     </>

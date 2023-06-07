@@ -1,0 +1,12 @@
+.error{
+    background-color: rgb(202, 43, 43);
+    display: flex;
+    width: 100%;
+    margin-bottom: 5px;
+    padding: 5px;
+    border: 2px solid rgba(255, 255, 255, 0.25);
+    border-radius: 5px;
+    outline: none;
+    color: #fff;
+    font-size: 1em;
+}

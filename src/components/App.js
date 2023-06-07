@@ -5,7 +5,7 @@ import LoginForm from "./LoginForm";
 import RegistrationForm from "./RegistrationForm";
 import BookForm from "./BookForm";
 import BooksTable from "./BooksTable";
-import "./css/App.css";
+import "../css/App.css";
 
 export default class App extends React.Component{
     render(){

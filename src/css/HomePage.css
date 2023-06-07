@@ -11,3 +11,15 @@ h1{
     color: rgba(255, 255, 255, 0.61);
     text-transform: uppercase;
 }
+
+#content{
+    text-align: center;
+    color: rgba(255, 255, 255, 0.61);
+    margin-inline: 25%;
+    font-size: 130%;
+    text-align: justify;
+}
+
+li{
+    list-style: none;
+}

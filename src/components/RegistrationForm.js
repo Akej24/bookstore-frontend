@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Nav from "./Nav";
-import './css/Form.css';
+import '../css/form/Form.css';
 
 export default function RegistrationForm(){
   
