@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import Nav from './Nav';
-import SuccessMessage from './form/SuccessMessage';
-import ErrorMessages from './form/ErrorMessages';
-import CheckboxField from './form/CheckboxField';
-import InputField from './form/InputField';
-import '../css/form/Form.css';
+import Nav from '../ui/Nav';
+import SuccessMessage from './SuccessMessage';
+import ErrorMessages from './ErrorMessages';
+import CheckboxField from './CheckboxField';
+import InputField from './InputField';
+import '../../css/form/Form.css';
 
 export default function BookForm() {
 
@@ -23,7 +23,7 @@ export default function BookForm() {
     const [success, setSuccess] = useState('')
     const { bookTitle, bookAuthor, releaseDate, numberOfPages, availabilityStatus, availablePieces, bookPrice } = book
 
-    function onInputChange(e){
+    function onInputChange(e) {
         const { name, value, type, checked } = e.target
         setBook({
             ...book,
@@ -31,7 +31,7 @@ export default function BookForm() {
         })
     }
 
-    async function onSubmit(e){
+    async function onSubmit(e) {
         e.preventDefault();
         setErrors(null);
         await axios
@@ -43,7 +43,7 @@ export default function BookForm() {
             })
     }
 
-    async function onReset(e){
+    function onReset(e) {
         setBook(bookInitialState)
     }
 

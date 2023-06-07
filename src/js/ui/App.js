@@ -1,11 +1,11 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import HomePage from "./HomePage";
-import LoginForm from "./LoginForm";
-import RegistrationForm from "./RegistrationForm";
-import BookForm from "./BookForm";
-import BooksTable from "./BooksTable";
-import "../css/App.css";
+import HomePage from "../content/HomePage";
+import LoginForm from "../form/LoginForm";
+import RegistrationForm from "../form/RegistrationForm";
+import BookForm from "../form/BookForm";
+import BooksTable from "../table/BooksTable";
+import "../../css/App.css";
 
 export default class App extends React.Component{
     render(){
