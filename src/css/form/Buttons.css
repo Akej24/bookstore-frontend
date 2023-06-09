@@ -1,0 +1,21 @@
+.button-div{
+    width: 100%;
+}
+
+.button{
+    width: 100%;
+    padding: 4%;
+    border: 2px solid rgba(255, 255, 255, 0.25);
+    border-radius: 5px;
+    background: #1d2b3a;
+    color: var(--body-text-color);
+    font-size: 1em;
+}
+
+#submit-button:hover{
+    background-color: rgba(212, 132, 11, 0.836);
+}
+#reset-button:hover{
+    background-color: rgb(175, 11, 11);
+}
+

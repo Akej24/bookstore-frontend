@@ -17,6 +17,7 @@ nav{
 }
 
 .nav-href{
+    color: var(--body-text-color);
     text-decoration: none;
 }
 

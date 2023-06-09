@@ -47,7 +47,7 @@ export default function LoginForm() {
 	}
 
 	return (
-		<div className="submission-form">
+		<div className="submission-form" id="login-form">
 			<form>
 				<Header content='Log in' />
 				<InputField
@@ -66,8 +66,10 @@ export default function LoginForm() {
 					value={password}
 					onChange={onInputChange}
 				/>
-				<SubmitButton onSubmit={onSubmit} />
-				<ResetButton onReset={onReset} />
+				<div className="buttons-container">
+					<SubmitButton onSubmit={onSubmit} value="Submit" />
+					<ResetButton onReset={onReset} value="Reset" />
+				</div>
 				<SuccessMessage success={success} />
 				<ErrorMessages errors={errors} />
 			</form>

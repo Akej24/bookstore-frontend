@@ -1,10 +1,15 @@
-export default function SubmitButton({ onSubmit }) {
+import '../../css/form/Buttons.css'
+
+export default function SubmitButton({ onSubmit, value }) {
     return (
-        <input
-            type="submit"
-            className="buttonBox"
-            onClick={(e) => onSubmit(e)}
-            value="Send" 
-        />
+        <div className="button-div">
+            <input
+                className="button"
+                id="submit-button"
+                type="submit"
+                onClick={(e) => onSubmit(e)}
+                value={value}
+            />
+        </div>
     );
 }

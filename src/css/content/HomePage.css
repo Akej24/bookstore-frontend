@@ -1,25 +1,21 @@
 #homepage{
-    display: flex;
-    align-items: center;
-    min-height: 100vh;
-    flex-direction: column;
-    gap: 30px; 
+    display: inline-block;
+    width: 45vw;
 }
 
-h1{
-    text-align: center;
-    color: rgba(255, 255, 255, 0.61);
+.homepage-header{
     text-transform: uppercase;
 }
 
-#homepage-content{
-    text-align: center;
-    color: rgba(255, 255, 255, 0.61);
-    margin-inline: 25%;
-    font-size: 130%;
+.homepage-content{
+    font-size: 120%;
     text-align: justify;
 }
 
-li{
+.homepage-article{
+    margin-bottom: 5%;
+}
+
+.homepage-list{
     list-style: none;
 }

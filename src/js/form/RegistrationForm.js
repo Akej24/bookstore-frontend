@@ -51,7 +51,7 @@ export default function RegistrationForm() {
 	}
 
 	return (
-		<div className="submission-form">
+		<div className="submission-form" id="registration-form">
 			<form onSubmit={(e) => onSubmit(e)}>
 				<Header content='Registration' />
 				<InputField
@@ -110,7 +110,6 @@ export default function RegistrationForm() {
 						checked={role === "USER"}
 						onChange={onInputChange}
 					/>
-					<br />
 					<InputRadio
 						label="Admin"
 						name="role"
@@ -119,9 +118,10 @@ export default function RegistrationForm() {
 						onChange={onInputChange}
 					/>
 				</label>
-				<br />
-				<SubmitButton onSubmit={onSubmit} />
-				<ResetButton onReset={onReset} />
+				<div className="buttons-container">
+					<SubmitButton onSubmit={onSubmit} value="Submit" />
+					<ResetButton onReset={onReset} value="Reset" />
+				</div>
 				<SuccessMessage success={success} />
 				<ErrorMessages errors={errors} />
 			</form>

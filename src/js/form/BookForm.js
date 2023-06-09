@@ -5,7 +5,7 @@ import SuccessMessage from './SuccessMessage';
 import ErrorMessages from './ErrorMessages';
 import SubmitButton from './SubmitButton';
 import ResetButton from './ResetButton';
-import CheckboxField from './CheckboxField';
+import CheckboxField from './InputCheckbox';
 import InputField from './InputField';
 import Header from '../ui/Header';
 import '../../css/form/Form.css';
@@ -54,7 +54,7 @@ export default function BookForm() {
     }
 
     return (
-        <div className="submission-form">
+        <div className="submission-form" id="book-form">
             <form>
                 <Header content='Book form' />
                 <InputField
@@ -95,8 +95,6 @@ export default function BookForm() {
                     checked={availabilityStatus}
                     onChange={onInputChange}
                 />
-                <br />
-                <br />
                 <InputField
                     label="Available pieces"
                     type="number"
@@ -113,8 +111,10 @@ export default function BookForm() {
                     value={bookPrice}
                     onChange={onInputChange}
                 />
-                <SubmitButton onSubmit={onSubmit} />
-                <ResetButton onReset={onReset} />
+                <div className="buttons-container">
+                    <SubmitButton onSubmit={onSubmit} value="Submit" />
+                    <ResetButton onReset={onReset} value="Reset" />
+                </div>
                 <SuccessMessage success={success} />
                 <ErrorMessages errors={errors} />
             </form>

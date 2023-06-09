@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import Nav from '../ui/Nav';
 import JwtCookie from '../shared/JwtCookie';
-import '../../css/form/Form.css';
+import SuccessMessage from '../form/SuccessMessage'
 import SubmitButton from '../form/SubmitButton';
+import "../../css/content/Logout.css"
 
 export default function Logout() {
+
+    const [success, setSuccess] = useState('')
 
     async function onSubmit(e) {
         e.preventDefault();
@@ -17,13 +19,14 @@ export default function Logout() {
                 d.setHours(d.getHours() - 1);
                 const utc = d.toUTCString();
                 document.cookie = 'Authorization=' + token + ';expires=' + utc;
+                setSuccess('Successively logged out')
             })
     }
 
     return (
-        <div>
-            Logout
-            <SubmitButton onSubmit={onSubmit} />
+        <div className="logout-page">
+            <SubmitButton onSubmit={onSubmit} value="Log out" />
+            <SuccessMessage success={success} />
         </div>
     );
 }

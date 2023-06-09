@@ -1,8 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
 
+:root{
+    --body-text-color: rgba(255, 255, 255, 0.61);
+}
+
 body{
     font-family: 'Poppins', sans-serif;
-    color: rgba(255, 255, 255, 0.61);
+    color: var(--body-text-color);
     background: linear-gradient(180deg, rgba(62,76,83,1) 0%, rgba(29,43,58,1) 44%) fixed;
     margin: 1%;
+}
+
+main{
+    text-align: center;
+    margin: auto;
 }
