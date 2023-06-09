@@ -19,16 +19,12 @@ th{
   width: 15%
 }
 
-td{
-  color: rgba(255, 255, 255, 0.61);
-  height: 50px;
-  border: 2px solid rgba(255, 255, 255, 0.61);
-  text-align: center;
-  vertical-align: middle;
-  padding: 5px;
-}
-
 h1 {
   text-align: center;
   margin-bottom: 40px;
+}
+
+.errorPage{
+  width: 30%;
+  margin-inline: auto;
 }

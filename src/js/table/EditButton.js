@@ -1,7 +1,12 @@
 import React from 'react';
+import '../../css/table/EditButton.css';
 
 export default function EditButton({ value, onEditClick }) {
     return (
-        <button value={value.bookId} onClick={onEditClick}>Edit</button>
+        <button 
+            className="edit" 
+            value={value.bookId} 
+            onClick={onEditClick}
+        >Edit</button>
     )
 }

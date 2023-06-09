@@ -1,30 +1,22 @@
-import React from "react";
-import "../../css/Nav.css";
+import NavElement from './NavElement'
+import '../../css/ui/Nav.css';
 
-class Nav extends React.Component {
-  render() {
+export default function Nav() {
     return (
-      <>
-        <div id="nav">
-          <a href="/">
-            <span>home page</span>
-          </a>
-          <a href="/login">
-            <span>log in</span>
-          </a>
-          <a href="/registration">
-            <span>register</span>
-          </a>
-          <a href="/createBook">
-            <span>book form</span>
-          </a>
-          <a href="/getAllBooks">
-            <span>books table</span>
-          </a>
-        </div>
-      </>
-    )
-  }
-}
+        <nav>
+            <NavElement name='Home page' href='/' />
+            <NavElement name='Register' href='/registration' />
+            <NavElement name='Log in' href='/login' />
+            <NavElement name='Log out' href='/logout' />
+            <NavElement name='Account' href='/' />
+            <NavElement name='Users' href='/' />
+            <NavElement name='Book form' href='/createBook' />
+            <NavElement name='Books table' href='/getAllBooks' />
+            <NavElement name='Cart' href='/' />
+            <NavElement name='Checkout cart' href='/' />
+            <NavElement name='Orders' href='/' />
+            <NavElement name='Deliveries' href='/' />
+        </nav>
 
-export default Nav;
+    )
+}

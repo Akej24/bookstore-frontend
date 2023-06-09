@@ -3,16 +3,19 @@ import axios from 'axios';
 import Nav from '../ui/Nav';
 import SuccessMessage from './SuccessMessage';
 import ErrorMessages from './ErrorMessages';
+import SubmitButton from './SubmitButton';
+import ResetButton from './ResetButton';
 import CheckboxField from './CheckboxField';
 import InputField from './InputField';
+import Header from '../ui/Header';
 import '../../css/form/Form.css';
 
 export default function BookForm() {
 
     const bookInitialState = {
-        bookTitle: "",
-        bookAuthor: "",
-        releaseDate: "",
+        bookTitle: '',
+        bookAuthor: '',
+        releaseDate: '',
         numberOfPages: 0,
         availabilityStatus: false,
         availablePieces: 0,
@@ -36,9 +39,12 @@ export default function BookForm() {
         setErrors(null);
         await axios
             .post("http://localhost:8080/api/v1/books", book)
-            .then(setSuccess("Successively added book"))
+            .then(() => {
+                setSuccess("Successively added book")
+                setErrors([])
+            })
             .catch(error => {
-                setSuccess("")
+                setSuccess('')
                 setErrors(error.response.data.errors);
             })
     }
@@ -48,75 +54,70 @@ export default function BookForm() {
     }
 
     return (
-        <>
-            <Nav />
-            <div className="submission-form">
-                <form
-                    onSubmit={(e) => onSubmit(e)}
-                    onReset={(e) => onReset(e)}>
-                    <h1><span>Book form</span></h1>
-                    <InputField
-                        label="Title"
-                        type="text"
-                        placeholder="Enter title"
-                        name="bookTitle"
-                        value={bookTitle}
-                        onChange={onInputChange}
-                    />
-                    <InputField
-                        label="Author"
-                        type="text"
-                        placeholder="Enter author"
-                        name="bookAuthor"
-                        value={bookAuthor}
-                        onChange={onInputChange}
-                    />
-                    <InputField
-                        label="Release date"
-                        type="date"
-                        placeholder="Enter release date"
-                        name="releaseDate"
-                        value={releaseDate}
-                        onChange={onInputChange}
-                    />
-                    <InputField
-                        label="Number of pages"
-                        type="number"
-                        placeholder="Enter number of pages"
-                        name="numberOfPages"
-                        value={numberOfPages}
-                        onChange={onInputChange}
-                    />
-                    <CheckboxField
-                        label="Status"
-                        name="availabilityStatus"
-                        checked={availabilityStatus}
-                        onChange={onInputChange}
-                    />
-                    <br />
-                    <br />
-                    <InputField
-                        label="Available pieces"
-                        type="number"
-                        name="availablePieces"
-                        placeholder="Enter available pieces"
-                        value={availablePieces}
-                        onChange={onInputChange}
-                    />
-                    <InputField
-                        label="Price"
-                        type="number"
-                        name="bookPrice"
-                        placeholder="Enter price"
-                        value={bookPrice}
-                        onChange={onInputChange}
-                    />
-                    <input type="submit" className="buttonBox" value="Send" />
-                    <input type="reset" className="buttonBox" value="Reset" />
-                    <SuccessMessage success={success} />
-                    <ErrorMessages errors={errors} />
-                </form>
-            </div>
-        </>
+        <div className="submission-form">
+            <form>
+                <Header content='Book form' />
+                <InputField
+                    label="Title"
+                    type="text"
+                    placeholder="Enter title"
+                    name="bookTitle"
+                    value={bookTitle}
+                    onChange={onInputChange}
+                />
+                <InputField
+                    label="Author"
+                    type="text"
+                    placeholder="Enter author"
+                    name="bookAuthor"
+                    value={bookAuthor}
+                    onChange={onInputChange}
+                />
+                <InputField
+                    label="Release date"
+                    type="date"
+                    placeholder="Enter release date"
+                    name="releaseDate"
+                    value={releaseDate}
+                    onChange={onInputChange}
+                />
+                <InputField
+                    label="Number of pages"
+                    type="number"
+                    placeholder="Enter number of pages"
+                    name="numberOfPages"
+                    value={numberOfPages}
+                    onChange={onInputChange}
+                />
+                <CheckboxField
+                    label="Status"
+                    name="availabilityStatus"
+                    checked={availabilityStatus}
+                    onChange={onInputChange}
+                />
+                <br />
+                <br />
+                <InputField
+                    label="Available pieces"
+                    type="number"
+                    name="availablePieces"
+                    placeholder="Enter available pieces"
+                    value={availablePieces}
+                    onChange={onInputChange}
+                />
+                <InputField
+                    label="Price"
+                    type="number"
+                    name="bookPrice"
+                    placeholder="Enter price"
+                    value={bookPrice}
+                    onChange={onInputChange}
+                />
+                <SubmitButton onSubmit={onSubmit} />
+                <ResetButton onReset={onReset} />
+                <SuccessMessage success={success} />
+                <ErrorMessages errors={errors} />
+            </form>
+        </div>
     );
 }

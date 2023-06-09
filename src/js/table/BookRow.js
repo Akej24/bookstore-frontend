@@ -1,6 +1,7 @@
 import React from 'react';
 import EditButton from './EditButton'
 import DeleteButton from './DeleteButton'
+import '../../css/table/BookRow.css'
 
 export default function BookRow({ key, value, onEditClick, onDeleteClick }) {
     return (
@@ -9,7 +10,7 @@ export default function BookRow({ key, value, onEditClick, onDeleteClick }) {
           <td>{value.bookAuthor}</td>
           <td>{value.releaseDate}</td>
           <td>{value.numberOfPages}</td>
-          <td>{value.status ? "available" : "not available"}</td>
+          <td>{value.availabilityStatus ? "available" : "not available"}</td>
           <td>{value.availablePieces}</td>
           <td>{value.bookPrice} zł</td>
           <td><button>-</button><button>+</button></td>

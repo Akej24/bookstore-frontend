@@ -1,0 +1,27 @@
+nav{
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    margin-bottom: 8vh;
+}
+
+.nav-item{
+    margin: 2%;
+    padding: 11px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.61);
+    border-radius: 20px;
+}
+
+.nav-item:hover{
+    background-color:rgba(17, 63, 82, 0.836);
+}
+
+.nav-href{
+    text-decoration: none;
+}
+
+.nav-span{
+    text-transform: uppercase;
+}
+
+

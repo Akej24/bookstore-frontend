@@ -1,145 +1,131 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Nav from "../ui/Nav";
+import Header from "../ui/Header";
+import InputField from "./InputField";
+import InputRadio from "./InputRadio";
+import SubmitButton from "./SubmitButton";
+import ResetButton from "./ResetButton";
+import SuccessMessage from "./SuccessMessage";
+import ErrorMessages from "./ErrorMessages";
 import '../../css/form/Form.css';
 
 export default function RegistrationForm() {
 
-  const [user, setUser] = useState({
-    email: "",
-    username: "",
-    password: "",
-    name: "",
-    surname: "",
-    dateOfBirth: "",
-    role: ""
-  })
+	const userInitialState = {
+		email: '',
+		username: '',
+		password: '',
+		firstName: '',
+		lastName: '',
+		dateOfBirth: '',
+		role: ''
+	}
+	const [user, setUser] = useState(userInitialState)
+	const [errors, setErrors] = useState([])
+	const [success, setSuccess] = useState('')
+	const { email, username, password, firstName, lastName, dateOfBirth, role } = user;
 
-  const { email, username, password, name, surname, dateOfBirth, role } = user;
+	function onInputChange(e) {
+		setUser({
+			...user,
+			[e.target.name]: e.target.value
+		})
+	}
 
-  const onInputChange = (e) => {
-    setUser({
-      ...user,
-      [e.target.name]: e.target.value
-    })
-  }
+	async function onSubmit(e) {
+		e.preventDefault();
+		await axios
+			.post("http://localhost:8080/api/v1/users/registration", user)
+			.then(() => {
+				setSuccess("Successively registered")
+				setErrors([])
+			})
+			.catch(error => {
+				setSuccess('')
+				setErrors(error.response.data.errors);
+			})
+	}
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    console.log(user);
-    await axios.post("http://localhost:8080/registration", user);
-  }
+	function onReset(e) {
+		setUser(userInitialState)
+	}
 
-  return (
-    <>
-      <Nav />
-      <div class="submission-form">
-        <form onSubmit={(e) => onSubmit(e)}>
-          <h1><span>Registration</span></h1>
-          <label htmlFor="email" class="inputBox">
-            <span>
-              E-mail
-            </span>
-            <input
-              type="text"
-              name="email"
-              placeholder="Enter your e-mail"
-              value={email}
-              onChange={(e) => onInputChange(e)}
-            />
-          </label>
-          <label htmlFor="username" class="inputBox">
-            <span>
-              Username
-            </span>
-            <input
-              type="text"
-              name="username"
-              placeholder="Enter your username"
-              value={username}
-              onChange={(e) => onInputChange(e)}
-            />
-          </label>
-          <label htmlFor="password" class="inputBox">
-            <span>
-              Password
-            </span>
-            <input
-              type="password"
-              name="password"
-              placeholder="Enter your password"
-              value={password}
-              onChange={(e) => onInputChange(e)}
-            />
-          </label>
-          <label htmlFor="name" class="inputBox">
-            <span>
-              Name
-            </span>
-            <input
-              type="text"
-              name="name"
-              placeholder="Enter your name"
-              value={name}
-              onChange={(e) => onInputChange(e)}
-            />
-          </label>
-          <label htmlFor="surname" class="inputBox">
-            <span>
-              Surname
-            </span>
-            <input
-              type="text"
-              name="surname"
-              placeholder="Enter your surname"
-              value={surname}
-              onChange={(e) => onInputChange(e)}
-            />
-          </label>
-          <label htmlFor="dateOfBirth" class="inputBox">
-            <span>
-              Date of birth
-            </span>
-            <input
-              type="date"
-              name="dateOfBirth"
-              placeholder="Enter your date of birth"
-              value={dateOfBirth}
-              onChange={(e) => onInputChange(e)}
-            />
-          </label>
-          <label htmlFor="role" class="role">
-            <label htmlFor="USER" class="inputRadio">
-              <span>
-                User
-              </span>
-              <input
-                type="radio"
-                name="role"
-                value="USER"
-                checked={role === "USER"}
-                onChange={(e) => onInputChange(e)}
-              />
-            </label>
-            <br />
-            <label htmlFor="ADMIN" class="inputRadio">
-              <span>
-                Admin
-              </span>
-              <input
-                type="radio"
-                name="role"
-                value="ADMIN"
-                checked={role === "ADMIN"}
-                onChange={(e) => onInputChange(e)}
-              />
-            </label>
-          </label>
-          <br />
-          <input type="submit" class="buttonBox" value="Send" />
-          <input type="reset" class="buttonBox" value="Reset" />
-        </form>
-      </div>
-    </>
-  );
+	return (
+		<div className="submission-form">
+			<form onSubmit={(e) => onSubmit(e)}>
+				<Header content='Registration' />
+				<InputField
+					label="Email"
+					type="text"
+					name="email"
+					placeholder="Enter your e-mail"
+					value={email}
+					onChange={onInputChange}
+				/>
+				<InputField
+					label="Username"
+					type="text"
+					name="username"
+					placeholder="Enter your username"
+					value={username}
+					onChange={onInputChange}
+				/>
+				<InputField
+					label="Password"
+					type="password"
+					name="password"
+					placeholder="Enter your password"
+					value={password}
+					onChange={onInputChange}
+				/>
+				<InputField
+					label="First name"
+					type="text"
+					name="firstName"
+					placeholder="Enter your first name"
+					value={firstName}
+					onChange={onInputChange}
+				/>
+				<InputField
+					label="Last name"
+					type="text"
+					name="lastName"
+					placeholder="Enter your last name"
+					value={lastName}
+					onChange={onInputChange}
+				/>
+				<InputField
+					label="Date of birth"
+					type="date"
+					name="dateOfBirth"
+					placeholder="Enter your date of birth"
+					value={dateOfBirth}
+					onChange={onInputChange}
+				/>
+				<label htmlFor="role" className="role">
+					<InputRadio
+						label="User"
+						name="role"
+						value="USER"
+						checked={role === "USER"}
+						onChange={onInputChange}
+					/>
+					<br />
+					<InputRadio
+						label="Admin"
+						name="role"
+						value="ADMIN"
+						checked={role === "ADMIN"}
+						onChange={onInputChange}
+					/>
+				</label>
+				<br />
+				<SubmitButton onSubmit={onSubmit} />
+				<ResetButton onReset={onReset} />
+				<SuccessMessage success={success} />
+				<ErrorMessages errors={errors} />
+			</form>
+		</div>
+	);
 }
