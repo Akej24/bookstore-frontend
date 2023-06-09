@@ -1,4 +1,3 @@
-import React from 'react';
 import '../../css/table/DeleteButton.css';
 
 export default function DeleteButton({ value, onDeleteClick }) {

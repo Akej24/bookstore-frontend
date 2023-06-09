@@ -1,7 +1,6 @@
-import React from 'react';
 import '../../css/form/SuccessMessage.css'
 
-export default function BookForm({ success }) {
+export default function SuccessMessage({ success }) {
     return (
         success && (
             <div className="success">{success}</div>

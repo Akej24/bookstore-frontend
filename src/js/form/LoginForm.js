@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import axios from 'axios';
-import Nav from '../ui/Nav';
 import SuccessMessage from './SuccessMessage';
 import ErrorMessages from './ErrorMessages';
 import InputField from './InputField';

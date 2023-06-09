@@ -1,4 +1,3 @@
-import React from 'react';
 import '../../css/table/EditButton.css';
 
 export default function EditButton({ value, onEditClick }) {

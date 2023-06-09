@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import Nav from "../ui/Nav";
 import Header from "../ui/Header";
 import InputField from "./InputField";
 import InputRadio from "./InputRadio";

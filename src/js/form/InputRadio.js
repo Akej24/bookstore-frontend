@@ -1,5 +1,3 @@
-import React from 'react';
-
 export default function InputRadio({ label, name, value, checked, onChange }) {
     return (
         <label htmlFor={value} className="inputRadio">

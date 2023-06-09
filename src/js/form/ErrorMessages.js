@@ -1,4 +1,3 @@
-import React from 'react';
 import '../../css/form/ErrorMessages.css';
 
 export default function ErrorMessage({ errors }) {

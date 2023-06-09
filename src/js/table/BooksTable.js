@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Nav from '../ui/Nav';
 import BookRow from './BookRow';
 import ErrorMessages from '../form/ErrorMessages';
 import JwtCookie from '../shared/JwtCookie'
@@ -40,7 +39,7 @@ export default function BooksTable() {
 
 	return (
 		<>
-			{redirectToHomePage && <><Nav /><div class="errorPage"><ErrorMessages errors={errors} /></div></>}
+			{redirectToHomePage && <div class="errorPage"><ErrorMessages errors={errors} /></div>}
 			{!redirectToHomePage && (
 				<div id="table">
 					<h1>Books table</h1>

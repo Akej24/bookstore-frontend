@@ -1,4 +1,3 @@
-import React from 'react';
 import '../../css/form/InputField.css'
 
 export default function InputField({ label, type, placeholder, name, value, onChange }) {

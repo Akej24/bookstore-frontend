@@ -1,4 +1,3 @@
-import React from 'react';
 import '../../css/form/CheckboxField.css'
 
 export default function CheckboxField({ label, name, checked, onChange }) {
