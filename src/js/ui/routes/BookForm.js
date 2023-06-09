@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import Nav from '../ui/Nav';
-import SuccessMessage from './SuccessMessage';
-import ErrorMessages from './ErrorMessages';
-import SubmitButton from './SubmitButton';
-import ResetButton from './ResetButton';
-import CheckboxField from './InputCheckbox';
-import InputField from './InputField';
-import Header from '../ui/Header';
-import '../../css/form/Form.css';
+import SuccessMessage from '../../components/messages/SuccessMessage';
+import ErrorMessages from '../../components/messages/ErrorMessages';
+import SubmitButton from '../../components/buttons/SubmitButton';
+import ResetButton from '../../components/buttons/ResetButton';
+import CheckboxField from '../../components/form/InputCheckbox';
+import InputField from '../../components/form/InputField';
+import Header from '../../components/view/Header';
+import '../../../css/form/Form.css';
 
 export default function BookForm() {
 

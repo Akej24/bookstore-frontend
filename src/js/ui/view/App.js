@@ -1,13 +1,13 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import HomePage from "../content/HomePage";
-import LoginForm from "../form/LoginForm";
-import RegistrationForm from "../form/RegistrationForm";
-import BookForm from "../form/BookForm";
-import BooksTable from "../table/BooksTable";
-import Logout from "../content/Logout"
+import HomePage from "../routes/HomePage";
+import LoginForm from "../routes/LoginForm";
+import RegistrationForm from "../routes/RegistrationForm";
+import BookForm from "../routes/BookForm";
+import BooksTable from "../routes/BooksTable";
+import Logout from "../routes/Logout"
 import Nav from "./Nav";
-import "../../css/ui/App.css";
+import "../../../css/ui/App.css";
 
 export default class App extends React.Component {
     render() {

@@ -1,4 +1,4 @@
-import '../../css/form/Buttons.css'
+import '../../../css/form/Buttons.css'
 
 export default function SubmitButton({ onSubmit, value }) {
     return (

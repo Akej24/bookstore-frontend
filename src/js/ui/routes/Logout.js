@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import JwtCookie from '../shared/JwtCookie';
-import SuccessMessage from '../form/SuccessMessage'
-import SubmitButton from '../form/SubmitButton';
-import "../../css/content/Logout.css"
+import JwtCookie from '../../shared/JwtCookie';
+import SuccessMessage from '../../components/messages/SuccessMessage'
+import SubmitButton from '../../components/buttons/SubmitButton';
+import "../../../css/content/Logout.css"
 
 export default function Logout() {
 

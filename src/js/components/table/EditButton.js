@@ -1,4 +1,4 @@
-import '../../css/table/EditButton.css';
+import '../../../css/table/EditButton.css';
 
 export default function EditButton({ value, onEditClick }) {
     return (

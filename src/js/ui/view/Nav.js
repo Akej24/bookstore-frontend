@@ -1,5 +1,5 @@
-import NavElement from './NavElement'
-import '../../css/ui/Nav.css';
+import NavElement from '../../components/view/NavElement'
+import '../../../css/ui/Nav.css';
 
 export default function Nav() {
     return (

@@ -1,4 +1,4 @@
-import '../../css/form/Messages.css';
+import '../../../css/form/Messages.css';
 
 export default function ErrorMessage({ errors }) {
     return (

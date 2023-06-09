@@ -1,4 +1,4 @@
-import '../../css/table/DeleteButton.css';
+import '../../../css/table/DeleteButton.css';
 
 export default function DeleteButton({ value, onDeleteClick }) {
     return (

@@ -1,6 +1,6 @@
 import EditButton from './EditButton'
 import DeleteButton from './DeleteButton'
-import '../../css/table/BookRow.css'
+import '../../../css/table/BookRow.css'
 
 export default function BookRow({ key, value, onEditClick, onDeleteClick }) {
     return (

@@ -1,4 +1,4 @@
-import "../../css/ui/Header.css"
+import "../../../css/ui/Header.css"
 
 export default function Header({ content }) {
     return (

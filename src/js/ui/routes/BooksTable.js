@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
-import BookRow from './BookRow';
-import ErrorMessages from '../form/ErrorMessages';
-import JwtCookie from '../shared/JwtCookie'
-import '../../css/table/BooksTable.css';
+import BookRow from '../../components/table/BookRow';
+import ErrorMessages from '../../components/messages/ErrorMessages';
+import JwtCookie from '../../shared/JwtCookie'
+import '../../../css/table/BooksTable.css';
 
 export default function BooksTable() {
 
