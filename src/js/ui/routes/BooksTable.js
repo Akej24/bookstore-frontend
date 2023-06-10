@@ -2,36 +2,41 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import BookRow from '../../components/table/BookRow';
 import ErrorMessages from '../../components/messages/ErrorMessages';
-import JwtCookie from '../../shared/JwtCookie'
+import Header from '../../components/view/Header';
+import BookHeader from '../../components/table/BookHeader'
+import { extractJwtFromCookie } from '../../shared/JwtCookie'
 import '../../../css/table/BooksTable.css';
 
 export default function BooksTable() {
 
-	const [books, setBooks] = useState([]);
-	const [redirectToHomePage, setRedirectToHomePage] = useState(false);
-	const errors = [{ message: 'Cannot load the page, because you are not logged in' }]
+	const [books, setBooks] = useState([])
+	const [token, setToken] = useState('')
+	const [authenticated, setAuthenticated] = useState(false)
+	const [errors, setErrors] = useState([])
 
 	useEffect(() => {
-		let token = '';
-		try {
-			token = JwtCookie.extractJwt();
-		} catch (error) {
-			console.log('fdfd')
-			setRedirectToHomePage(true)
-		}
-		axios
-			.get("http://localhost:8080/api/v1/books", { headers: { 'Authorization': 'Bearer ' + token } })
-			.then(response => setBooks(response.data))
-			.catch(error => {
-
-				console.log('fdfd222')
-				setRedirectToHomePage(true)
-			})
+		const extractedToken = extractJwtFromCookie();
+		setToken(extractedToken);
+		setAuthenticated(extractedToken !== '');
 	}, []);
+
+	useEffect(() => {
+		setErrors(authenticated ? [] : [{ message: 'Cannot load the page because you are not logged in' }]);
+	}, [authenticated]);
+
+	useEffect(() => {
+		authenticated && axios
+			.get("http://localhost:8080/api/v1/books", { headers: { 'Authorization': 'Bearer ' + token } })
+			.then(response => {
+				console.log(response.data)
+				setBooks(response.data)
+			})
+			.catch(error => setErrors([{ message: 'Internal error' }]))
+	}, [authenticated]);
 
 
 	async function onDeleteClick(bookId) {
-		await axios.delete("http://localhost:8080/api/v1/books/" + bookId);
+		await axios.delete("http://localhost:8080/api/v1/books/" + bookId)
 	}
 
 	async function onEditClick() {
@@ -39,31 +44,23 @@ export default function BooksTable() {
 
 	return (
 		<>
-			{redirectToHomePage && <div class="errorPage"><ErrorMessages errors={errors} /></div>}
-			{!redirectToHomePage && (
-				<div id="table">
-					<h1>Books table</h1>
-					<table className="books-table">
-						<tr>
-							<th>Title</th>
-							<th>Author</th>
-							<th>Release date</th>
-							<th>Pages</th>
-							<th>Status</th>
-							<th>Available pieces</th>
-							<th>Price</th>
-							<th>Add to cart</th>
-							<th>Edit</th>
-							<th>Delete</th>
-						</tr>
-						{books.map((value, key) =>
-							<BookRow
-								key={key}
-								value={value}
-								onEditClick={onEditClick}
-								onDeleteClick={onDeleteClick}
-							/>
-						)}
+			{!authenticated && <div className="errorPage"><ErrorMessages errors={errors} /></div>}
+			{authenticated && (
+				<div className="books-table">
+					<Header content="Books table" />
+					<table>
+						<thead className="books-table-thead">
+							<BookHeader />
+						</thead>
+						<tbody className="books-table-tbody">
+							{books.map((book) =>
+								<BookRow
+									value={book}
+									onEditClick={onEditClick}
+									onDeleteClick={onDeleteClick}
+								/>
+							)}
+						</tbody>
 					</table>
 				</div>
 			)}

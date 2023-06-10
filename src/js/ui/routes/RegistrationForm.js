@@ -42,7 +42,7 @@ export default function RegistrationForm() {
 			})
 			.catch(error => {
 				setSuccess('')
-				setErrors(error.response.data.errors);
+				setErrors(error.response.data.errors)
 			})
 	}
 

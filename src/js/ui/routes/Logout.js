@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import JwtCookie from '../../shared/JwtCookie';
+import { extractJwtFromCookie, deleteJwtFromCookie } from '../../shared/JwtCookie';
 import SuccessMessage from '../../components/messages/SuccessMessage'
 import SubmitButton from '../../components/buttons/SubmitButton';
 import "../../../css/content/Logout.css"
@@ -10,15 +10,12 @@ export default function Logout() {
     const [success, setSuccess] = useState('')
 
     async function onSubmit(e) {
-        e.preventDefault();
-        const token = JwtCookie.extractJwt()
+        e.preventDefault()
+        const token = extractJwtFromCookie()
         await axios
             .get("http://localhost:8080/api/v1/logout", { headers: { 'Authorization': 'Bearer ' + token } })
             .then(() => {
-                const d = new Date();
-                d.setHours(d.getHours() - 1);
-                const utc = d.toUTCString();
-                document.cookie = 'Authorization=' + token + ';expires=' + utc;
+                deleteJwtFromCookie(token)
                 setSuccess('Successively logged out')
             })
     }

@@ -1,20 +1,18 @@
-import EditButton from './EditButton'
-import DeleteButton from './DeleteButton'
-import '../../../css/table/BookRow.css'
 
-export default function BookRow({ key, value, onEditClick, onDeleteClick }) {
+import SubmitButton from '../buttons/SubmitButton'
+
+export default function BookRow({ value, onEditClick, onDeleteClick }) {
     return (
-        <tr key={key}>
-          <td>{value.bookTitle}</td>
-          <td>{value.bookAuthor}</td>
-          <td>{value.releaseDate}</td>
-          <td>{value.numberOfPages}</td>
-          <td>{value.availabilityStatus ? "available" : "not available"}</td>
-          <td>{value.availablePieces}</td>
-          <td>{value.bookPrice} zł</td>
-          <td><button>-</button><button>+</button></td>
-          <td><EditButton value={value} onEditClick={onEditClick} /></td>
-          <td><DeleteButton value={value} onDeleteClick={onDeleteClick} /></td>
+        <tr key={value.bookId}>
+            <td>{value.bookTitle}</td>
+            <td>{value.bookAuthor}</td>
+            <td>{value.releaseDate}</td>
+            <td>{value.numberOfPages}</td>
+            <td>{value.availablePieces < 1 ? 'none' : value.availablePieces}</td>
+            <td>{value.bookPrice} zł</td>
+            <td><SubmitButton onSubmit={onEditClick} value={'Add'} /></td>
+            <td><SubmitButton onSubmit={onEditClick} value={'Edit'} /></td>
+            <td><SubmitButton onSubmit={onDeleteClick} value={'Delete'} /></td>
         </tr>
     )
 }

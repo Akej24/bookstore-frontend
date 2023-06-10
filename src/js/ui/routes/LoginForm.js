@@ -6,6 +6,7 @@ import InputField from '../../components/form/InputField';
 import SubmitButton from '../../components/buttons/SubmitButton';
 import ResetButton from '../../components/buttons/ResetButton';
 import Header from '../../components/view/Header';
+import { saveJwtToCookie } from '../../shared/JwtCookie';
 import '../../../css/form/Form.css';
 
 export default function LoginForm() {
@@ -32,12 +33,12 @@ export default function LoginForm() {
 			.post("http://localhost:8080/api/v1/login", user)
 			.then((response) => {
 				const token = response.headers.authorization
-				document.cookie = 'Authorization=' + token
+				saveJwtToCookie(token)
 				setSuccess("Successively logged in");
 				setErrors([]);
 			})
 			.catch(error => {
-				setSuccess("")
+				setSuccess('')
 				setErrors(error.response.data.errors);
 			})
 	}

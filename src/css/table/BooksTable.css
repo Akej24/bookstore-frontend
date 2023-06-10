@@ -1,30 +1,25 @@
 .books-table {
-  margin-left: 17%;
-  margin-right: 17%;
-  margin-bottom: 80px;
-  border: 2px solid rgba(255, 255, 255, 0.61);
-  border-collapse: collapse;
-  
+    display: inline-block;
+    width: 85%;
+    margin-bottom: 5%;
 }
 
-th{
-  border: 2px solid rgba(255, 255, 255, 0.61);
-  text-align: center;
-  vertical-align: middle;
-  padding: 5px;
-  pointer-events: none;
-  font-size: 1em;
-  color: rgba(255, 255, 255, 0.61);
-  text-transform: uppercase;
-  width: 15%
+.books-table table {
+    width: 100%;
+    margin-top: 3%;
+    border-collapse: collapse;
 }
 
-h1 {
-  text-align: center;
-  margin-bottom: 40px;
+.books-table-thead th {
+    border: 2px solid var(--body-text-color);
+    padding: 5px;
+    font-size: 1em;
+    text-transform: uppercase;
 }
 
-.errorPage{
-  width: 30%;
-  margin-inline: auto;
+
+.books-table-tbody td {
+    border: 2px solid var(--body-text-color);
+    height: 50px;
+    padding: 5px;
 }
