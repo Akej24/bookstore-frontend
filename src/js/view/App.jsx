@@ -6,6 +6,7 @@ import RegistrationForm from "../routes/RegistrationForm";
 import BookForm from "../routes/BookForm";
 import BooksTable from "../routes/BooksTable";
 import Logout from "../routes/Logout"
+import Orders from '../routes/Orders';
 import Nav from "./Nav";
 import "../../css/view/App.css";
 
@@ -19,11 +20,12 @@ export default class App extends React.Component {
                         <Router>
                             <Routes>
                                 <Route exact path="/" element={<HomePage />} />
-                                <Route exact path="/login" element={<LoginForm />} />
                                 <Route exact path="/registration" element={<RegistrationForm />} />
-                                <Route exact path="/createBook" element={<BookForm variant='create' bookInitialState='' />} />
-                                <Route exact path="/getAllBooks" element={<BooksTable />} />
+                                <Route exact path="/login" element={<LoginForm />} />
+                                <Route exact path="/create-book" element={<BookForm variant='create' bookInitialState='' />} />
+                                <Route exact path="/books" element={<BooksTable />} />
                                 <Route exact path="/logout" element={<Logout />} />
+                                <Route exact path="/orders" element={<Orders />} />
                             </Routes>
                         </Router>
                     </main>

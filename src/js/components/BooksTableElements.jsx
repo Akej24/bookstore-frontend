@@ -16,7 +16,7 @@ export function BookHeader() {
     )
 }
 
-export  function BookRow({ book, addToCartClick, onEditClick, onDeleteClick }) {
+export function BookRow({ book, addToCartClick, onEditClick, onDeleteClick }) {
     return (
         <tr key={book.bookId}>
             <td>{book.bookTitle}</td>

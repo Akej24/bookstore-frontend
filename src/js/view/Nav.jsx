@@ -10,11 +10,11 @@ export default function Nav() {
             <NavElement name='Log out' href='/logout' />
             <NavElement name='Account' href='/' />
             <NavElement name='Users' href='/' />
-            <NavElement name='Book form' href='/createBook' />
-            <NavElement name='Books table' href='/getAllBooks' />
+            <NavElement name='Book form' href='/create-book' />
+            <NavElement name='Books table' href='/books' />
             <NavElement name='Cart' href='/' />
             <NavElement name='Checkout cart' href='/' />
-            <NavElement name='Orders' href='/' />
+            <NavElement name='Orders' href='/orders' />
             <NavElement name='Deliveries' href='/' />
         </nav>
 

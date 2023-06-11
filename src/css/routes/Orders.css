@@ -1,0 +1,16 @@
+.orders{
+    display: inline-block;
+    width: 40vw;
+}
+
+.order-summary{
+    padding: 5%;
+    margin-top: 5%;
+    border: 2px solid var(--body-text-color);
+    font-size: large;
+    text-align: left;
+}
+
+.order-summary-data{
+    float: right;
+}
