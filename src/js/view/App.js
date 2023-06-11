@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "../routes/HomePage";
 import LoginForm from "../routes/LoginForm";
@@ -7,7 +7,7 @@ import BookForm from "../routes/BookForm";
 import BooksTable from "../routes/BooksTable";
 import Logout from "../routes/Logout"
 import Nav from "./Nav";
-import "../../../css/ui/App.css";
+import "../../css/view/App.css";
 
 export default class App extends React.Component {
     render() {

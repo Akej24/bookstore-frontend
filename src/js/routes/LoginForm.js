@@ -1,13 +1,11 @@
 import { useState } from 'react'
 import axios from 'axios'
-import SuccessMessage from '../../components/messages/SuccessMessage'
-import ErrorMessages from '../../components/messages/ErrorMessages'
-import InputField from '../../components/form/InputField'
-import SubmitButton from '../../components/buttons/SubmitButton'
-import ResetButton from '../../components/buttons/ResetButton'
-import Header from '../../components/view/Header'
-import { saveJwtToCookie } from '../../shared/JwtCookie'
-import '../../../css/form/Form.css'
+import { SuccessMessage, ErrorMessages } from '../components/Messages'
+import { InputField } from '../components/Inputs'
+import { SubmitButton, ResetButton } from '../components/Buttons'
+import Header from '../components/Header'
+import { saveJwtToCookie } from '../shared/jwt_cookie'
+import '../../css/components/Form.css'
 
 export default function LoginForm() {
 

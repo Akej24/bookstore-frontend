@@ -1,7 +1,22 @@
+import { SubmitButton } from './Buttons'
 
-import SubmitButton from '../buttons/SubmitButton'
+export function BookHeader() {
+    return (
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Release date</th>
+            <th>Pages</th>
+            <th>Availability</th>
+            <th>Price</th>
+            <th>Add to cart</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    )
+}
 
-export default function BookRow({ book, addToCartClick, onEditClick, onDeleteClick }) {
+export  function BookRow({ book, addToCartClick, onEditClick, onDeleteClick }) {
     return (
         <tr key={book.bookId}>
             <td>{book.bookTitle}</td>

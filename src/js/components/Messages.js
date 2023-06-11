@@ -1,6 +1,6 @@
-import '../../../css/form/Messages.css';
+import '../../css/components/Messages.css';
 
-export default function ErrorMessage({ errors }) {
+export function ErrorMessages({ errors }) {
     return (
         errors && (
             <div className="messages">
@@ -9,6 +9,16 @@ export default function ErrorMessage({ errors }) {
                         {error.message}
                     </div>
                 ))}
+            </div>
+        )
+    );
+}
+
+export function SuccessMessage({ success }) {
+    return (
+        success && (
+            <div className="message" id="success-message">
+                {success}
             </div>
         )
     );

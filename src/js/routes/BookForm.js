@@ -1,15 +1,12 @@
 import { useState } from 'react'
 import axios from 'axios'
-import SuccessMessage from '../../components/messages/SuccessMessage'
-import ErrorMessages from '../../components/messages/ErrorMessages'
-import SubmitButton from '../../components/buttons/SubmitButton'
-import ResetButton from '../../components/buttons/ResetButton'
-import CheckboxField from '../../components/form/InputCheckbox'
-import InputField from '../../components/form/InputField'
-import Header from '../../components/view/Header'
-import useAuthentication from '../../shared/useAuthentication'
-import { ADD_BOOK_URL, EDIT_BOOK_URL, bookEmptyState } from './constans'
-import '../../../css/form/Form.css'
+import { SuccessMessage, ErrorMessages } from '../components/Messages'
+import { SubmitButton, ResetButton } from '../components/Buttons'
+import { InputField, InputCheckbox } from '../components/Inputs'
+import { ADD_BOOK_URL, EDIT_BOOK_URL, bookEmptyState } from '../shared/constans'
+import Header from '../components/Header'
+import useAuthentication from '../shared/useAuthentication'
+import '../../css/components/Form.css'
 
 export default function BookForm({ variant, bookInitialState }) {
 
@@ -87,7 +84,7 @@ export default function BookForm({ variant, bookInitialState }) {
                             value={numberOfPages}
                             onChange={onInputChange}
                         />
-                        <CheckboxField
+                        <InputCheckbox
                             label="Status"
                             name="availabilityStatus"
                             checked={availabilityStatus}

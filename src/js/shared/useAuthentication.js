@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { extractJwtFromCookie } from './JwtCookie';
+import { extractJwtFromCookie } from './jwt_cookie';
 
 export default function useAuthentication() {
     const [token, setToken] = useState('');
