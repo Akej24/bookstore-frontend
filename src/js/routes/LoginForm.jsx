@@ -3,8 +3,8 @@ import axios from 'axios'
 import { SuccessMessage, ErrorMessages } from '../components/Messages'
 import { InputField } from '../components/Inputs'
 import { SubmitButton, ResetButton } from '../components/Buttons'
-import Header from '../components/Header'
 import { saveJwtToCookie } from '../shared/jwt_cookie'
+import Header from '../components/Header'
 import '../../css/components/Form.css'
 
 export default function LoginForm() {
