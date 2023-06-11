@@ -7,7 +7,7 @@ export default function SubmitButton({ onSubmit, value }) {
                 className="button"
                 id="submit-button"
                 type="submit"
-                onClick={(e) => onSubmit(e)}
+                onClick={onSubmit}
                 value={value}
             />
         </div>

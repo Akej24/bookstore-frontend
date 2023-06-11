@@ -1,69 +1,76 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import BookRow from '../../components/table/BookRow';
-import ErrorMessages from '../../components/messages/ErrorMessages';
-import Header from '../../components/view/Header';
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+import BookRow from '../../components/table/BookRow'
+import ErrorMessages from '../../components/messages/ErrorMessages'
+import Header from '../../components/view/Header'
+import BookForm from './BookForm'
 import BookHeader from '../../components/table/BookHeader'
-import { extractJwtFromCookie } from '../../shared/JwtCookie'
-import '../../../css/table/BooksTable.css';
+import useAuthentication from '../../shared/useAuthentication'
+import { GET_BOOKS_URL } from './constans'
+import '../../../css/table/BooksTable.css'
 
 export default function BooksTable() {
 
 	const [books, setBooks] = useState([])
-	const [token, setToken] = useState('')
-	const [authenticated, setAuthenticated] = useState(false)
-	const [errors, setErrors] = useState([])
-
-	useEffect(() => {
-		const extractedToken = extractJwtFromCookie();
-		setToken(extractedToken);
-		setAuthenticated(extractedToken !== '');
-	}, []);
-
-	useEffect(() => {
-		setErrors(authenticated ? [] : [{ message: 'Cannot load the page because you are not logged in' }]);
-	}, [authenticated]);
+	const [reloadData, setReloadData] = useState(false)
+	const [editingBook, setEditingBook] = useState(null)
+	const { token, authenticated, errors, setErrors } = useAuthentication()
 
 	useEffect(() => {
 		authenticated && axios
-			.get("http://localhost:8080/api/v1/books", { headers: { 'Authorization': 'Bearer ' + token } })
+			.get(API_URL, { headers: { 'Authorization': 'Bearer ' + token } })
 			.then(response => {
-				console.log(response.data)
 				setBooks(response.data)
+				setReloadData(false)
 			})
-			.catch(error => setErrors([{ message: 'Internal error' }]))
-	}, [authenticated]);
+			.catch(() => setErrors([{ message: 'Internal error' }]))
+	}, [authenticated, reloadData])
 
 
-	async function onDeleteClick(bookId) {
-		await axios.delete("http://localhost:8080/api/v1/books/" + bookId)
+	async function onDeleteClick(book) {
+		authenticated && await axios
+			.delete(GET_BOOKS_URL + '/' + book.bookId, { headers: { 'Authorization': 'Bearer ' + token } })
+		setReloadData(true)
 	}
 
-	async function onEditClick() {
+	async function onEditClick(book) {
+		setEditingBook(book);
+	}
+
+	async function addToCartClick(book) {
+		authenticated && await axios
+			.post("http://localhost:8080/api/v1/cart/", { 'bookId': book.bookId }, { headers: { 'Authorization': 'Bearer ' + token } })
 	}
 
 	return (
 		<>
 			{!authenticated && <div className="errorPage"><ErrorMessages errors={errors} /></div>}
 			{authenticated && (
-				<div className="books-table">
-					<Header content="Books table" />
-					<table>
-						<thead className="books-table-thead">
-							<BookHeader />
-						</thead>
-						<tbody className="books-table-tbody">
-							{books.map((book) =>
-								<BookRow
-									value={book}
-									onEditClick={onEditClick}
-									onDeleteClick={onDeleteClick}
-								/>
-							)}
-						</tbody>
-					</table>
-				</div>
+				<>
+					{editingBook && <BookForm variant='edit' bookInitialState={editingBook} />}
+					{!editingBook &&
+						<div className="books-table">
+							<Header content="Books table" />
+							<table>
+								<thead className="books-table-thead">
+									<BookHeader />
+								</thead>
+								<tbody className="books-table-tbody">
+									{books.map((book) => (
+										<BookRow
+											key={book.bookId}
+											book={book}
+											addToCartClick={addToCartClick}
+											onEditClick={onEditClick}
+											onDeleteClick={onDeleteClick}
+										/>
+									))}
+								</tbody>
+							</table>
+						</div>
+					}
+				</>
 			)}
 		</>
-	)
+	);
 }

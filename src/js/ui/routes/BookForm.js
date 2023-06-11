@@ -1,42 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import SuccessMessage from '../../components/messages/SuccessMessage';
-import ErrorMessages from '../../components/messages/ErrorMessages';
-import SubmitButton from '../../components/buttons/SubmitButton';
-import ResetButton from '../../components/buttons/ResetButton';
-import CheckboxField from '../../components/form/InputCheckbox';
-import InputField from '../../components/form/InputField';
-import Header from '../../components/view/Header';
-import { extractJwtFromCookie } from '../../shared/JwtCookie'
-import '../../../css/form/Form.css';
+import { useState } from 'react'
+import axios from 'axios'
+import SuccessMessage from '../../components/messages/SuccessMessage'
+import ErrorMessages from '../../components/messages/ErrorMessages'
+import SubmitButton from '../../components/buttons/SubmitButton'
+import ResetButton from '../../components/buttons/ResetButton'
+import CheckboxField from '../../components/form/InputCheckbox'
+import InputField from '../../components/form/InputField'
+import Header from '../../components/view/Header'
+import useAuthentication from '../../shared/useAuthentication'
+import { ADD_BOOK_URL, EDIT_BOOK_URL, bookEmptyState } from './constans'
+import '../../../css/form/Form.css'
 
-export default function BookForm() {
+export default function BookForm({ variant, bookInitialState }) {
 
-    const bookInitialState = {
-        bookTitle: '',
-        bookAuthor: '',
-        releaseDate: '',
-        numberOfPages: 0,
-        availabilityStatus: false,
-        availablePieces: 0,
-        bookPrice: 0
-    }
-    const [book, setBook] = useState(bookInitialState)
+    const [book, setBook] = useState(bookInitialState || bookEmptyState);
     const [success, setSuccess] = useState('')
-    const [token, setToken] = useState('')
-    const [authenticated, setAuthenticated] = useState(false)
-    const [errors, setErrors] = useState([])
-    const { bookTitle, bookAuthor, releaseDate, numberOfPages, availabilityStatus, availablePieces, bookPrice } = book
-
-    useEffect(() => {
-        const extractedToken = extractJwtFromCookie();
-        setToken(extractedToken);
-        setAuthenticated(extractedToken !== '');
-    }, []);
-
-    useEffect(() => {
-        setErrors(authenticated ? [] : [{ message: 'Cannot load the page because you are not logged in' }]);
-    }, [authenticated]);
+    const { token, authenticated, errors, setErrors } = useAuthentication();
+    const { bookId, bookTitle, bookAuthor, releaseDate, numberOfPages, availabilityStatus, availablePieces, bookPrice } = book
 
     function onInputChange(e) {
         const { name, value, type, checked } = e.target
@@ -48,20 +28,24 @@ export default function BookForm() {
 
     async function onSubmit(e) {
         e.preventDefault();
-        authenticated && await axios
-            .post("http://localhost:8080/api/v1/books", book, { headers: { 'Authorization': 'Bearer ' + token } })
-            .then(() => {
-                setSuccess("Successively added book")
-                setErrors([])
-            })
-            .catch(error => {
-                setSuccess('')
-                setErrors(error.response.data.errors)
-            })
+        try {
+            if (variant === 'create') {
+                await axios.post(ADD_BOOK_URL, book, { headers: { Authorization: 'Bearer ' + token } });
+            } else if (variant === 'edit') {
+                await axios.put(EDIT_BOOK_URL + '/' + book.bookId, book, { headers: { Authorization: 'Bearer ' + token } });
+            }
+            setSuccess('Successfully ' + (variant === 'create' ? 'added' : 'edited'));
+            setErrors([]);
+        } catch (error) {
+            setSuccess('');
+            setErrors(error.response.data.errors);
+        }
     }
 
     function onReset(e) {
-        setBook(bookInitialState)
+        setErrors([])
+        setSuccess('')
+        setBook(bookInitialState || bookEmptyState)
     }
 
     return (

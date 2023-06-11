@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "../routes/HomePage";
 import LoginForm from "../routes/LoginForm";
@@ -21,7 +21,7 @@ export default class App extends React.Component {
                                 <Route exact path="/" element={<HomePage />} />
                                 <Route exact path="/login" element={<LoginForm />} />
                                 <Route exact path="/registration" element={<RegistrationForm />} />
-                                <Route exact path="/createBook" element={<BookForm />} />
+                                <Route exact path="/createBook" element={<BookForm variant='create' bookInitialState='' />} />
                                 <Route exact path="/getAllBooks" element={<BooksTable />} />
                                 <Route exact path="/logout" element={<Logout />} />
                             </Routes>

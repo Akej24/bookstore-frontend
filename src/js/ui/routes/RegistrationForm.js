@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import axios from "axios";
-import Header from "../../components/view/Header";
-import InputField from "../../components/form/InputField";
-import InputRadio from "../../components/form/InputRadio";
-import SubmitButton from "../../components/buttons/SubmitButton";
-import ResetButton from "../../components/buttons/ResetButton";
-import SuccessMessage from "../../components/messages/SuccessMessage";
-import ErrorMessages from "../../components/messages/ErrorMessages";
-import '../../../css/form/Form.css';
+import { useState } from 'react'
+import axios from 'axios'
+import Header from '../../components/view/Header'
+import InputField from '../../components/form/InputField'
+import InputRadio from '../../components/form/InputRadio'
+import SubmitButton from '../../components/buttons/SubmitButton'
+import ResetButton from '../../components/buttons/ResetButton'
+import SuccessMessage from '../../components/messages/SuccessMessage'
+import ErrorMessages from '../../components/messages/ErrorMessages'
+import '../../../css/form/Form.css'
 
 export default function RegistrationForm() {
 

@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { extractJwtFromCookie, deleteJwtFromCookie } from '../../shared/JwtCookie';
+import { useState } from 'react'
+import axios from 'axios'
+import { extractJwtFromCookie, deleteJwtFromCookie } from '../../shared/JwtCookie'
 import SuccessMessage from '../../components/messages/SuccessMessage'
-import SubmitButton from '../../components/buttons/SubmitButton';
-import "../../../css/content/Logout.css"
+import SubmitButton from '../../components/buttons/SubmitButton'
+import '../../../css/content/Logout.css'
 
 export default function Logout() {
 

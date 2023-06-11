@@ -1,13 +1,13 @@
-import React, { useState } from 'react'
-import axios from 'axios';
-import SuccessMessage from '../../components/messages/SuccessMessage';
-import ErrorMessages from '../../components/messages/ErrorMessages';
-import InputField from '../../components/form/InputField';
-import SubmitButton from '../../components/buttons/SubmitButton';
-import ResetButton from '../../components/buttons/ResetButton';
-import Header from '../../components/view/Header';
-import { saveJwtToCookie } from '../../shared/JwtCookie';
-import '../../../css/form/Form.css';
+import { useState } from 'react'
+import axios from 'axios'
+import SuccessMessage from '../../components/messages/SuccessMessage'
+import ErrorMessages from '../../components/messages/ErrorMessages'
+import InputField from '../../components/form/InputField'
+import SubmitButton from '../../components/buttons/SubmitButton'
+import ResetButton from '../../components/buttons/ResetButton'
+import Header from '../../components/view/Header'
+import { saveJwtToCookie } from '../../shared/JwtCookie'
+import '../../../css/form/Form.css'
 
 export default function LoginForm() {
 
@@ -43,7 +43,9 @@ export default function LoginForm() {
 			})
 	}
 
-	function onReset(e) {
+	function onReset() {
+		setErrors([])
+		setSuccess('')
 		setUser(userInitialState)
 	}
 
