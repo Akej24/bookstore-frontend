@@ -1,23 +1,17 @@
 import { useState } from 'react'
 import axios from 'axios'
+
 import Header from '../components/Header'
+import { registerUserInitialState, usersUrl } from '../shared/constans'
 import { InputField, InputRadio } from '../components/Inputs'
 import { SubmitButton, ResetButton } from '../components/Buttons'
 import { SuccessMessage, ErrorMessages } from '../components/Messages'
+
 import '../../css/components/Form.css'
 
 export default function RegistrationForm() {
 
-	const userInitialState = {
-		email: '',
-		username: '',
-		password: '',
-		firstName: '',
-		lastName: '',
-		dateOfBirth: '',
-		role: ''
-	}
-	const [user, setUser] = useState(userInitialState)
+	const [user, setUser] = useState(registerUserInitialState)
 	const [errors, setErrors] = useState([])
 	const [success, setSuccess] = useState('')
 	const { email, username, password, firstName, lastName, dateOfBirth, role } = user;
@@ -32,7 +26,7 @@ export default function RegistrationForm() {
 	async function onSubmit(e) {
 		e.preventDefault();
 		await axios
-			.post("http://localhost:8080/api/v1/users/registration", user)
+			.post(usersUrl('/registration'), user)
 			.then(() => {
 				setSuccess("Successively registered")
 				setErrors([])
@@ -44,7 +38,7 @@ export default function RegistrationForm() {
 	}
 
 	function onReset(e) {
-		setUser(userInitialState)
+		setUser(registerUserInitialState)
 	}
 
 	return (

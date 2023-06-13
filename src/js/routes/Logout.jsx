@@ -1,8 +1,11 @@
 import { useState } from 'react'
 import axios from 'axios'
+
 import { extractJwtFromCookie, deleteJwtFromCookie } from '../shared/jwt_cookie'
+import { logoutUrl, authHeader } from '../shared/constans'
 import { SuccessMessage } from '../components/Messages'
 import { SubmitButton } from '../components/Buttons'
+
 import '../../css/routes/Logout.css'
 
 export default function Logout() {
@@ -13,7 +16,7 @@ export default function Logout() {
         e.preventDefault()
         const token = extractJwtFromCookie()
         await axios
-            .get("http://localhost:8080/api/v1/logout", { headers: { 'Authorization': 'Bearer ' + token } })
+            .get(logoutUrl, authHeader(token))
             .then(() => {
                 deleteJwtFromCookie(token)
                 setSuccess('Successively logged out')

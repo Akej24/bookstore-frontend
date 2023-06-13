@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+
 import { ErrorMessages } from '../components/Messages'
-import { GET_ORDERS_URL } from '../shared/constans'
-import { convertDateToSimpleFomart } from "../shared/converters";
+import { authHeader, orderUrl } from '../shared/constans'
+import { convertDateToSimpleFormat } from "../shared/converters";
 import SummaryLine from '../components/SummaryLine'
 import useAuthentication from '../shared/useAuthentication'
 import Header from '../components/Header'
+
 import '../../css/routes/Orders.css'
 
 export default function Orders() {
@@ -15,7 +17,7 @@ export default function Orders() {
 
     useEffect(() => {
         authenticated && axios
-            .get(GET_ORDERS_URL, { headers: { 'Authorization': 'Bearer ' + token } })
+            .get(orderUrl, authHeader(token))
             .then(response => setOrders(response.data))
             .catch(() => setErrors([{ message: 'Internal error' }]))
     }, [authenticated])
@@ -39,7 +41,7 @@ export default function Orders() {
                             />
                             <SummaryLine
                                 content="Order date"
-                                value={convertDateToSimpleFomart(order.orderDate)}
+                                value={convertDateToSimpleFormat(order.orderDate)}
                             />
                             <SummaryLine
                                 content="Order status"

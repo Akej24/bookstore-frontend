@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+
 import { ErrorMessages } from '../components/Messages'
-import { ADD_PRODUCT_TO_CART_URL, DELETE_BOOKS_URL, GET_BOOKS_URL } from '../shared/constans'
+import { booksUrl, cartUrl, authHeader } from '../shared/constans'
 import BooksTable from '../components/BooksTable'
 import useAuthentication from '../shared/useAuthentication'
 import BookForm from './BookForm'
 import Header from '../components/Header'
+
 import '../../css/components/Table.css'
 
 export default function Books() {
@@ -17,7 +19,7 @@ export default function Books() {
 
 	useEffect(() => {
 		authenticated && axios
-			.get(GET_BOOKS_URL, { headers: { 'Authorization': 'Bearer ' + token } })
+			.get(booksUrl('/'), authHeader(token))
 			.then(response => {
 				setBooks(response.data)
 				setReloadData(false)
@@ -28,7 +30,7 @@ export default function Books() {
 
 	async function onDeleteClick(book) {
 		authenticated && await axios
-			.delete(DELETE_BOOKS_URL + book.bookId, { headers: { 'Authorization': 'Bearer ' + token } })
+			.delete(booksUrl('/') + book.bookId, authHeader(token))
 		setReloadData(true)
 	}
 
@@ -38,7 +40,7 @@ export default function Books() {
 
 	async function addToCartClick(book) {
 		authenticated && await axios
-			.post(ADD_PRODUCT_TO_CART_URL, { 'bookId': book.bookId }, { headers: { 'Authorization': 'Bearer ' + token } })
+			.post(cartUrl('/'), {'bookId': book.bookId}, authHeader(token))
 	}
 
 	return (

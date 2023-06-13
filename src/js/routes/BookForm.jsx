@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import axios from 'axios'
+
 import { SuccessMessage, ErrorMessages } from '../components/Messages'
 import { SubmitButton, ResetButton } from '../components/Buttons'
 import { InputField, InputCheckbox } from '../components/Inputs'
-import { ADD_BOOK_URL, EDIT_BOOK_URL, bookEmptyState } from '../shared/constans'
+import { bookEmptyState, booksUrl, authHeader } from '../shared/constans'
 import Header from '../components/Header'
 import useAuthentication from '../shared/useAuthentication'
+
 import '../../css/components/Form.css'
 
 export default function BookForm({ variant, bookInitialState }) {
@@ -27,9 +29,9 @@ export default function BookForm({ variant, bookInitialState }) {
         e.preventDefault();
         try {
             if (variant === 'create') {
-                await axios.post(ADD_BOOK_URL, book, { headers: { Authorization: 'Bearer ' + token } });
+                await axios.post(booksUrl(''), book, authHeader(token));
             } else if (variant === 'edit') {
-                await axios.put(EDIT_BOOK_URL + book.bookId, book, { headers: { Authorization: 'Bearer ' + token } });
+                await axios.put(booksUrl('/') + book.bookId, book, authHeader(token));
             }
             setSuccess('Successfully ' + (variant === 'create' ? 'added' : 'edited'));
             setErrors([]);

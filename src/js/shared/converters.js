@@ -1,4 +1,4 @@
-export function convertDateToSimpleFomart(utcDate) {
+export function convertDateToSimpleFormat(utcDate) {
     const date = new Date(utcDate);
     const year = date.getFullYear();
     const month = ('0' + (date.getMonth() + 1)).slice(-2);

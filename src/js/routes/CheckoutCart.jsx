@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+
 import { ErrorMessages } from '../components/Messages'
-import { GET_CHECKOUT_CART_URL, ADD_PAYMENT_URL, ADD_ADDRESS_URL, ORDER_CHECKOUT_CART_URL } from '../shared/constans'
+import { authHeader, checkoutCartUrl, orderUrl } from '../shared/constans'
 import { SubmitButton } from '../components/Buttons'
 import { SuccessMessage } from '../components/Messages'
 import { InputField } from '../components/Inputs'
 import SummaryLine from '../components/SummaryLine'
 import useAuthentication from '../shared/useAuthentication'
 import Header from '../components/Header'
+
 import '../../css/routes/CheckoutCart.css'
 
 export default function CheckoutCart() {
@@ -38,7 +40,7 @@ export default function CheckoutCart() {
 
     useEffect(() => {
         authenticated && axios
-            .get(GET_CHECKOUT_CART_URL, { headers: { 'Authorization': 'Bearer ' + token } })
+            .get(checkoutCartUrl(''), authHeader(token))
             .then(response => {
                 setSummaryPaymentMethod(response.data.paymentMethod)
                 setSummaryAddress(response.data.address)
@@ -50,7 +52,7 @@ export default function CheckoutCart() {
     async function onAddPaymentClick() {
         setSuccess('')
         authenticated && await axios
-            .patch(ADD_PAYMENT_URL, {'paymentMethod': paymentMethod}, { headers: { 'Authorization': 'Bearer ' + token } })
+            .patch(checkoutCartUrl('/payment'), {'paymentMethod': paymentMethod}, authHeader(token))
             .then(() => setSuccess('Succcessively added payment method'))
             .catch(error => setErrors(error.response.data.errors))
     }
@@ -58,7 +60,7 @@ export default function CheckoutCart() {
     async function onAddAddressClick() {
         setSuccess('')
         authenticated && await axios
-            .patch(ADD_ADDRESS_URL, address, { headers: { 'Authorization': 'Bearer ' + token } })
+            .patch(checkoutCartUrl('/address'), address, authHeader(token))
             .then(() => setSuccess('Succcessively added address'))
             .catch(error => setErrors(error.response.data.errors))
     }
@@ -66,7 +68,7 @@ export default function CheckoutCart() {
     async function onOrderClick() {
         setSuccess('')
         authenticated && await axios
-            .post(ORDER_CHECKOUT_CART_URL, null, { headers: { 'Authorization': 'Bearer ' + token } })
+            .post(orderUrl(''), null, authHeader(token))
             .then(() => setSuccess('Succcessively checked out'))
             .catch(error => setErrors(error.response.data.errors))
     }

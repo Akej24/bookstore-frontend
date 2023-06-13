@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+
 import { ErrorMessages } from '../components/Messages'
-import { GET_ACCOUNT_URL, GET_ORDERS_URL } from '../shared/constans'
+import { usersUrl, authHeader } from '../shared/constans'
 import { SubmitButton } from '../components/Buttons'
 import AccountForm from '../components/AccountForm'
 import SummaryLine from '../components/SummaryLine'
 import useAuthentication from '../shared/useAuthentication'
 import Header from '../components/Header'
+
 import '../../css/routes/Account.css'
 
 export default function Account() {
@@ -17,14 +19,14 @@ export default function Account() {
 
     useEffect(() => {
         authenticated && axios
-            .get(GET_ACCOUNT_URL, { headers: { 'Authorization': 'Bearer ' + token } })
+            .get(usersUrl('/account'), authHeader(token))
             .then(response => setAccount(response.data))
             .catch(() => setErrors([{ message: 'Internal error' }]))
     }, [authenticated])
 
     async function onEditClick(account) {
-		setEditingAccount(account);
-	}
+        setEditingAccount(account);
+    }
 
     return (
         <>

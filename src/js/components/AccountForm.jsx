@@ -3,7 +3,7 @@ import axios from 'axios'
 import { SuccessMessage, ErrorMessages } from '../components/Messages'
 import { SubmitButton, ResetButton } from '../components/Buttons'
 import { InputField } from '../components/Inputs'
-import { ADD_BOOK_URL, EDIT_ACCOUNT_URL } from '../shared/constans'
+import { authHeader, usersUrl } from '../shared/constans'
 import Header from '../components/Header'
 import useAuthentication from '../shared/useAuthentication'
 import '../../css/components/Form.css'
@@ -26,7 +26,7 @@ export default function BookForm({ accountInitialState }) {
     async function onSubmit(e) {
         e.preventDefault();
         try {
-            await axios.patch(EDIT_ACCOUNT_URL, account, { headers: { Authorization: 'Bearer ' + token } });
+            await axios.patch(usersUrl('/account'), account, authHeader(token));
             setSuccess('Successfully edited');
             setErrors([]);
         } catch (error) {

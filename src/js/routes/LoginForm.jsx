@@ -1,19 +1,18 @@
 import { useState } from 'react'
 import axios from 'axios'
+
 import { SuccessMessage, ErrorMessages } from '../components/Messages'
 import { InputField } from '../components/Inputs'
 import { SubmitButton, ResetButton } from '../components/Buttons'
+import { loginUrl, loginUserInitialState } from '../shared/constans'
 import { saveJwtToCookie } from '../shared/jwt_cookie'
 import Header from '../components/Header'
+
 import '../../css/components/Form.css'
 
 export default function LoginForm() {
 
-	const userInitialState = {
-		email: '',
-		password: ''
-	}
-	const [user, setUser] = useState(userInitialState)
+	const [user, setUser] = useState(loginUserInitialState)
 	const [errors, setErrors] = useState([])
 	const [success, setSuccess] = useState('')
 	const { email, password } = user;
@@ -28,7 +27,7 @@ export default function LoginForm() {
 	async function onSubmit(e) {
 		e.preventDefault();
 		await axios
-			.post("http://localhost:8080/api/v1/login", user)
+			.post(loginUrl, user)
 			.then((response) => {
 				const token = response.headers.authorization
 				saveJwtToCookie(token)
@@ -44,7 +43,7 @@ export default function LoginForm() {
 	function onReset() {
 		setErrors([])
 		setSuccess('')
-		setUser(userInitialState)
+		setUser(loginUserInitialState)
 	}
 
 	return (
