@@ -1,0 +1,27 @@
+.cart{
+    display: inline-block;
+    width: 90vw;
+}
+
+.cart-summary-and-checkout{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cart-summary{
+    width: 25vw;
+    margin-bottom: 3%;
+    padding: 1%;
+    border: 2px solid var(--body-text-color);
+    font-size: large;
+    text-align: left;
+}
+
+.cart-checkout{
+    width: 25vw;
+    margin-bottom: 5%;
+    padding: 1%;
+    font-size: large;
+    text-align: left;
+}

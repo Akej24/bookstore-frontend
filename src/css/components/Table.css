@@ -1,16 +1,16 @@
-.books-table {
+.table-div {
     display: inline-block;
     width: 85%;
     margin-bottom: 5%;
 }
 
-.books-table table {
+table {
     width: 100%;
     margin-top: 3%;
     border-collapse: collapse;
 }
 
-.books-table-thead th {
+th {
     border: 2px solid var(--body-text-color);
     padding: 5px;
     font-size: 1em;
@@ -18,7 +18,7 @@
 }
 
 
-.books-table-tbody td {
+td {
     border: 2px solid var(--body-text-color);
     height: 50px;
     padding: 5px;

@@ -30,22 +30,18 @@ export default function Orders() {
                     {orders.map(order => (
                         <div className="order-summary">
                             <SummaryLine
-                                className="order-id"
                                 content="Order number"
                                 value={order.orderId}
                             />
                             <SummaryLine
-                                className="order-payment-method"
                                 content="Payment method"
                                 value={order.paymentMethod}
                             />
                             <SummaryLine
-                                className="order-date"
                                 content="Order date"
                                 value={convertDateToSimpleFomart(order.orderDate)}
                             />
                             <SummaryLine
-                                className="order-status"
                                 content="Order status"
                                 value={order.orderStatus}
                             />

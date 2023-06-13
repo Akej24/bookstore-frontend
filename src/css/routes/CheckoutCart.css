@@ -1,4 +1,4 @@
-.order-summary{
+.checkout-cart-summary{
     padding: 5%;
     margin-top: 5%;
     border: 2px solid var(--body-text-color);
@@ -6,7 +6,7 @@
     text-align: left;
 }
 
-.orders{
+.checkout-cart{
     display: inline-block;
     width: 40vw;
 }

@@ -29,7 +29,7 @@ export default function BookForm({ variant, bookInitialState }) {
             if (variant === 'create') {
                 await axios.post(ADD_BOOK_URL, book, { headers: { Authorization: 'Bearer ' + token } });
             } else if (variant === 'edit') {
-                await axios.put(EDIT_BOOK_URL + '/' + book.bookId, book, { headers: { Authorization: 'Bearer ' + token } });
+                await axios.put(EDIT_BOOK_URL + book.bookId, book, { headers: { Authorization: 'Bearer ' + token } });
             }
             setSuccess('Successfully ' + (variant === 'create' ? 'added' : 'edited'));
             setErrors([]);

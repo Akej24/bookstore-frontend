@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { BookRow, BookHeader } from '../components/BooksTableElements'
 import { ErrorMessages } from '../components/Messages'
-import { DELETE_BOOKS_URL, GET_BOOKS_URL } from '../shared/constans'
+import { ADD_PRODUCT_TO_CART_URL, DELETE_BOOKS_URL, GET_BOOKS_URL } from '../shared/constans'
+import BooksTable from '../components/BooksTable'
 import useAuthentication from '../shared/useAuthentication'
 import BookForm from './BookForm'
 import Header from '../components/Header'
-import '../../css/routes/BooksTable.css'
+import '../../css/components/Table.css'
 
-export default function BooksTable() {
+export default function Books() {
 
 	const [books, setBooks] = useState([])
 	const [editingBook, setEditingBook] = useState(null)
@@ -28,7 +28,7 @@ export default function BooksTable() {
 
 	async function onDeleteClick(book) {
 		authenticated && await axios
-			.delete(DELETE_BOOKS_URL + '/' + book.bookId, { headers: { 'Authorization': 'Bearer ' + token } })
+			.delete(DELETE_BOOKS_URL + book.bookId, { headers: { 'Authorization': 'Bearer ' + token } })
 		setReloadData(true)
 	}
 
@@ -38,7 +38,7 @@ export default function BooksTable() {
 
 	async function addToCartClick(book) {
 		authenticated && await axios
-			.post("http://localhost:8080/api/v1/cart/", { 'bookId': book.bookId }, { headers: { 'Authorization': 'Bearer ' + token } })
+			.post(ADD_PRODUCT_TO_CART_URL, { 'bookId': book.bookId }, { headers: { 'Authorization': 'Bearer ' + token } })
 	}
 
 	return (
@@ -48,24 +48,13 @@ export default function BooksTable() {
 				<>
 					{editingBook && <BookForm variant='edit' bookInitialState={editingBook} />}
 					{!editingBook &&
-						<div className="books-table">
+						<div className="table-div">
 							<Header content="Books table" />
-							<table>
-								<thead className="books-table-thead">
-									<BookHeader />
-								</thead>
-								<tbody className="books-table-tbody">
-									{books.map((book) => (
-										<BookRow
-											key={book.bookId}
-											book={book}
-											addToCartClick={addToCartClick}
-											onEditClick={onEditClick}
-											onDeleteClick={onDeleteClick}
-										/>
-									))}
-								</tbody>
-							</table>
+							<BooksTable
+								books={books}
+								addToCartClick={addToCartClick}
+								onEditClick={onEditClick}
+								onDeleteClick={onDeleteClick} />
 						</div>
 					}
 				</>

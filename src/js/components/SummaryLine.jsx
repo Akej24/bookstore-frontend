@@ -1,8 +1,10 @@
-export default function SummaryLine({ className, content, value }) {
+import '../../css/components/SummaryLine.css'
+
+export default function SummaryLine({ content, value }) {
     return (
-        <div className={className}>
+        <div className="summary-line">
             {content}
-            <span className="order-summary-data">
+            <span className="summary-data">
                 {value}
             </span>
         </div>
