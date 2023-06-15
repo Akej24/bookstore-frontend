@@ -33,7 +33,18 @@ export const bookEmptyState = {
     bookAuthor: '',
     releaseDate: '',
     numberOfPages: 0,
-    availabilityStatus: false,
-    availablePieces: 0,
+    availabilityStatus: true,
+    availablePieces: 1,
     bookPrice: 0
-};
+}
+
+export const addressInitialState = {
+    firstName: '',
+    lastName: '',
+    phoneNumber: '',
+    street: '',
+    streetNumber: 0,
+    zipCode: '',
+    city: ''
+}
+

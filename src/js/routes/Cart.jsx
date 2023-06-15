@@ -27,29 +27,44 @@ export default function Cart() {
                 setCart(response.data)
                 setReloadData(false)
             })
-            .catch(() => setErrors([{ message: 'Internal error' }]))
+            .catch((error) => setErrors(error.response.data.errors))
     }, [authenticated, reloadData])
 
     async function onDecreaseClick(bookId) {
+        setErrors([])
+        setSuccess('')
         authenticated && await axios
             .patch(cartUrl('/product/decrease'), { 'bookId': bookId }, authHeader(token))
-        setSuccess('')
+            .catch(error => setErrors(error.response.data.errors));
         setReloadData(true)
     }
 
     async function onIncreaseClick(bookId) {
+        setErrors([])
+        setSuccess('')
         authenticated && await axios
             .patch(cartUrl('/product/increase'), { 'bookId': bookId }, authHeader(token))
-            setSuccess('')
+            .catch(error => setErrors(error.response.data.errors));
         setReloadData(true)
     }
+
+    async function onDeleteClick(bookId) {
+        setErrors([]);
+        setSuccess('');
+        authenticated &&
+          await axios
+            .delete(cartUrl('/product/' + bookId), authHeader(token))
+            .catch((error) => setErrors(error.response.data.errors));
+        setReloadData(true);
+        cart.cartLines.length === 1 && setCart([]);
+      }
 
     async function onCheckoutClick() {
         setSuccess('')
         authenticated && await axios
             .post(checkoutCartUrl(''), null, authHeader(token))
-            .then( () => setSuccess('Succcessively checked out'))
-            .catch( error => setErrors(error.response.data.errors))
+            .then(() => setSuccess('Succcessively checked out'))
+            .catch(error => setErrors(error.response.data.errors))
     }
 
     return (
@@ -64,11 +79,12 @@ export default function Cart() {
                                 cartLines={cart.cartLines}
                                 onDecreaseClick={onDecreaseClick}
                                 onIncreaseClick={onIncreaseClick}
+                                onDeleteClick={onDeleteClick}
                             />
                         )}
                         <div className="cart-summary-and-checkout">
                             <div className="cart-summary">
-                                <SummaryLine content='Total price: ' value={cart.totalPrice + ' zł'} />
+                                <SummaryLine content='Total price: ' value={cart.totalPrice ? cart.totalPrice + ' zł' : '0 zł'} />
                             </div>
                             <div className="cart-checkout">
                                 <SubmitButton onSubmit={onCheckoutClick} value='Checkout' />

@@ -10,12 +10,13 @@ function CartHeader() {
                 <th>Decrease</th>
                 <th>Amount</th>
                 <th>Increase</th>
+                <th>Delete</th>
             </tr>
         </thead>
     )
 }
 
-function CartRow({ cartLine, onDecreaseClick, onIncreaseClick }) {
+function CartRow({ cartLine, onDecreaseClick, onIncreaseClick, onDeleteClick }) {
     return (
         <tr key={cartLine.bookId}>
             <td>{cartLine.bookTitle}</td>
@@ -24,11 +25,12 @@ function CartRow({ cartLine, onDecreaseClick, onIncreaseClick }) {
             <td><SubmitButton onSubmit={() => onDecreaseClick(cartLine.bookId)} value='Decrease' /></td>
             <td>{cartLine.booksAmount}</td>
             <td><SubmitButton onSubmit={() => onIncreaseClick(cartLine.bookId)} value='Increase' /></td>
+            <td><SubmitButton onSubmit={() => onDeleteClick(cartLine.bookId)} value='Delete' /></td>
         </tr>
     )
 }
 
-export default function CartTable({ cartLines, onDecreaseClick, onIncreaseClick }) {
+export default function CartTable({ cartLines, onDecreaseClick, onIncreaseClick, onDeleteClick }) {
     return (
         <div className="table-div">
             <table>
@@ -39,6 +41,7 @@ export default function CartTable({ cartLines, onDecreaseClick, onIncreaseClick 
                             cartLine={cartLine}
                             onDecreaseClick={onDecreaseClick}
                             onIncreaseClick={onIncreaseClick}
+                            onDeleteClick={onDeleteClick}
                         />
                     ))}
                 </tbody>

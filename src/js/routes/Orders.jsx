@@ -4,9 +4,9 @@ import axios from 'axios'
 import { ErrorMessages } from '../components/Messages'
 import { authHeader, orderUrl } from '../shared/constans'
 import { convertDateToSimpleFormat } from "../shared/converters";
+import Header from '../components/Header'
 import SummaryLine from '../components/SummaryLine'
 import useAuthentication from '../shared/useAuthentication'
-import Header from '../components/Header'
 
 import '../../css/routes/Orders.css'
 
@@ -17,7 +17,7 @@ export default function Orders() {
 
     useEffect(() => {
         authenticated && axios
-            .get(orderUrl, authHeader(token))
+            .get(orderUrl(''), authHeader(token))
             .then(response => setOrders(response.data))
             .catch(() => setErrors([{ message: 'Internal error' }]))
     }, [authenticated])

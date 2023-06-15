@@ -2,28 +2,38 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 
 import { ErrorMessages } from '../components/Messages'
-import { authHeader, checkoutCartUrl, orderUrl } from '../shared/constans'
-import { SubmitButton } from '../components/Buttons'
+import { addressInitialState, authHeader, checkoutCartUrl, orderUrl } from '../shared/constans'
+import { SubmitButton, ResetButton } from '../components/Buttons'
 import { SuccessMessage } from '../components/Messages'
-import { InputField } from '../components/Inputs'
+import { InputField, InputRadio } from '../components/Inputs'
 import SummaryLine from '../components/SummaryLine'
 import useAuthentication from '../shared/useAuthentication'
 import Header from '../components/Header'
 
 import '../../css/routes/CheckoutCart.css'
+import '../../css/components/Form.css'
 
 export default function CheckoutCart() {
 
     const [summaryPaymentMethod, setSummaryPaymentMethod] = useState('')
     const [summaryAddress, setSummaryAddress] = useState([])
-
     const [paymentMethod, setPaymentMethod] = useState('')
-    const [address, setAddress] = useState([])
-
+    const [address, setAddress] = useState(addressInitialState)
     const [reloadData, setReloadData] = useState(false)
     const [success, setSuccess] = useState('')
     const { token, authenticated, errors, setErrors } = useAuthentication()
     const { firstName, lastName, phoneNumber, street, streetNumber, zipCode, city } = address;
+
+    useEffect(() => {
+        authenticated && axios
+            .get(checkoutCartUrl(''), authHeader(token))
+            .then(response => {
+                setSummaryPaymentMethod(response.data.paymentMethod || '');
+                setSummaryAddress(response.data.address || []);
+                setReloadData(false)
+            })
+            .catch((error) => setErrors(error.response.data.errors || []))
+    }, [authenticated, reloadData])
 
     function onPaymentInputChange(e) {
         const { value } = e.target
@@ -31,45 +41,55 @@ export default function CheckoutCart() {
     }
 
     function onAddressInputChange(e) {
-        const { name, value } = e.target
+        const { name, value, type } = e.target
         setAddress({
             ...address,
-            [name]: value
+            [name]: type === 'number' ? Number(value) : value
         })
     }
 
-    useEffect(() => {
-        authenticated && axios
-            .get(checkoutCartUrl(''), authHeader(token))
-            .then(response => {
-                setSummaryPaymentMethod(response.data.paymentMethod)
-                setSummaryAddress(response.data.address)
-                setReloadData(false)
-            })
-            .catch(() => setErrors([{ message: 'Internal error' }]))
-    }, [authenticated, reloadData])
-
-    async function onAddPaymentClick() {
+    function onPaymentMethodReset() {
+        setErrors([])
         setSuccess('')
-        authenticated && await axios
-            .patch(checkoutCartUrl('/payment'), {'paymentMethod': paymentMethod}, authHeader(token))
-            .then(() => setSuccess('Succcessively added payment method'))
-            .catch(error => setErrors(error.response.data.errors))
+        setPaymentMethod('')
     }
 
-    async function onAddAddressClick() {
+    function onAddressReset() {
+        setErrors([])
         setSuccess('')
+        setAddress([])
+    }
+
+    async function onAddPaymentClick(e) {
+        e.preventDefault()
+        setSuccess('')
+        setErrors([])
+        authenticated && await axios
+            .patch(checkoutCartUrl('/payment'), { 'paymentMethod': paymentMethod }, authHeader(token))
+            .then(() => setSuccess('Succcessively added payment method'))
+            .catch(error => setErrors(error.response.data.errors))
+        setReloadData(true)
+    }
+
+    async function onAddAddressClick(e) {
+        console.log({address})
+        e.preventDefault()
+        setSuccess('')
+        setErrors([])
         authenticated && await axios
             .patch(checkoutCartUrl('/address'), address, authHeader(token))
             .then(() => setSuccess('Succcessively added address'))
             .catch(error => setErrors(error.response.data.errors))
+        setReloadData(true)
     }
 
-    async function onOrderClick() {
+    async function onOrderClick(e) {
+        e.preventDefault()
         setSuccess('')
+        setErrors([])
         authenticated && await axios
             .post(orderUrl(''), null, authHeader(token))
-            .then(() => setSuccess('Succcessively checked out'))
+            .then(() => setSuccess('Succcessively orderd and e-mail sent'))
             .catch(error => setErrors(error.response.data.errors))
     }
 
@@ -90,79 +110,109 @@ export default function CheckoutCart() {
                             <SummaryLine content='City: ' value={summaryAddress.city} />
                             <SummaryLine content='Payment method: ' value={summaryPaymentMethod} />
                         </div>
-                        <div className="checkout-cart-payment">
-                            <InputField
-                                label='Payment method'
-                                type='text'
-                                placeholder='Enter payment'
-                                name='paymentMethod'
-                                value={paymentMethod}
-                                onChange={onPaymentInputChange}
-                            />
-                            <SubmitButton onSubmit={onAddPaymentClick} value='Add payment' />
-                            <SuccessMessage success={success} />
-                            <ErrorMessages errors={errors} />
-                        </div>
-                        <div className="checkout-cart-address">
-                            <InputField
-                                label='First name'
-                                type='text'
-                                placeholder='Enter first name'
-                                name='firstName'
-                                value={firstName}
-                                onChange={onAddressInputChange}
-                            />
-                            <InputField
-                                label='Last name'
-                                type='text'
-                                placeholder='Enter last name'
-                                name='lastName'
-                                value={lastName}
-                                onChange={onAddressInputChange}
-                            />
-                            <InputField
-                                label='Phone number'
-                                type='text'
-                                placeholder='Enter phone number'
-                                name='phoneNumber'
-                                value={phoneNumber}
-                                onChange={onAddressInputChange}
-                            />
-                            <InputField
-                                label='Street'
-                                type='text'
-                                placeholder='Enter street'
-                                name='street'
-                                value={street}
-                                onChange={onAddressInputChange}
-                            />
-                            <InputField
-                                label='Street number'
-                                type='number'
-                                placeholder='Enter street number'
-                                name='streetNumber'
-                                value={streetNumber}
-                                onChange={onAddressInputChange}
-                            />
-                            <InputField
-                                label='Zip code'
-                                type='text'
-                                placeholder='Enter zip code'
-                                name='zipCode'
-                                value={zipCode}
-                                onChange={onAddressInputChange}
-                            />
-                            <InputField
-                                label='City'
-                                type='text'
-                                placeholder='Enter city'
-                                name='city'
-                                value={city}
-                                onChange={onAddressInputChange}
-                            />
-                            <SubmitButton onSubmit={onAddAddressClick} value='Add address' />
-                            <SuccessMessage success={success} />
-                            <ErrorMessages errors={errors} />
+                        <div className="payment-address-forms">
+                            <form className="submission-form">
+                                <div className="payment-form">
+                                    <label htmlFor="paymentMethod" className="payment-method">
+                                        <InputRadio
+                                            label="Credit card"
+                                            name="paymentMethod"
+                                            value="CREDIT_CARD"
+                                            checked={paymentMethod === "CREDIT_CARD"}
+                                            onChange={onPaymentInputChange}
+                                        />
+                                        <InputRadio
+                                            label="Blik"
+                                            name="paymentMethod"
+                                            value="BLIK"
+                                            checked={paymentMethod === "BLIK"}
+                                            onChange={onPaymentInputChange}
+                                        />
+                                        <InputRadio
+                                            label="Paypal"
+                                            name="paymentMethod"
+                                            value="PAYPAL"
+                                            checked={paymentMethod === "PAYPAL"}
+                                            onChange={onPaymentInputChange}
+                                        />
+                                    </label>
+                                    <div className="buttons-container">
+                                        <SubmitButton onSubmit={onAddPaymentClick} value='Add payment' />
+                                        <ResetButton onReset={onPaymentMethodReset} value="Reset" />
+                                    </div>
+                                    <div className="messages">
+                                        <SuccessMessage success={success} />
+                                        <ErrorMessages errors={errors} />
+                                    </div>
+                                </div>
+                            </form>
+                            <form className="submission-form">
+                                <div className="address-form">
+                                    <InputField
+                                        label='First name'
+                                        type='text'
+                                        placeholder='Enter first name'
+                                        name='firstName'
+                                        value={firstName}
+                                        onChange={onAddressInputChange}
+                                    />
+                                    <InputField
+                                        label='Last name'
+                                        type='text'
+                                        placeholder='Enter last name'
+                                        name='lastName'
+                                        value={lastName}
+                                        onChange={onAddressInputChange}
+                                    />
+                                    <InputField
+                                        label='Phone number'
+                                        type='text'
+                                        placeholder='Enter phone number'
+                                        name='phoneNumber'
+                                        value={phoneNumber}
+                                        onChange={onAddressInputChange}
+                                    />
+                                    <InputField
+                                        label='Street'
+                                        type='text'
+                                        placeholder='Enter street'
+                                        name='street'
+                                        value={street}
+                                        onChange={onAddressInputChange}
+                                    />
+                                    <InputField
+                                        label='Street number'
+                                        type='number'
+                                        placeholder='Enter street number'
+                                        name='streetNumber'
+                                        value={streetNumber}
+                                        onChange={onAddressInputChange}
+                                    />
+                                    <InputField
+                                        label='Zip code'
+                                        type='text'
+                                        placeholder='Enter zip code'
+                                        name='zipCode'
+                                        value={zipCode}
+                                        onChange={onAddressInputChange}
+                                    />
+                                    <InputField
+                                        label='City'
+                                        type='text'
+                                        placeholder='Enter city'
+                                        name='city'
+                                        value={city}
+                                        onChange={onAddressInputChange}
+                                    />
+                                    <div className="buttons-container">
+                                        <SubmitButton onSubmit={onAddAddressClick} value='Add address' />
+                                        <ResetButton onReset={onAddressReset} value="Reset" />
+                                    </div>
+                                    <div className="order-button">
+                                        <SubmitButton onSubmit={onOrderClick} value='Order' />
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </>

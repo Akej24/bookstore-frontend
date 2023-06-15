@@ -3,6 +3,7 @@ import axios from 'axios'
 
 import { ErrorMessages } from '../components/Messages'
 import { booksUrl, cartUrl, authHeader } from '../shared/constans'
+import { PaginationButtons } from '../components/Buttons'
 import BooksTable from '../components/BooksTable'
 import useAuthentication from '../shared/useAuthentication'
 import BookForm from './BookForm'
@@ -14,18 +15,19 @@ export default function Books() {
 
 	const [books, setBooks] = useState([])
 	const [editingBook, setEditingBook] = useState(null)
+	const [currentPage, setCurrentPage] = useState(0)
 	const [reloadData, setReloadData] = useState(false)
 	const { token, authenticated, errors, setErrors } = useAuthentication()
 
 	useEffect(() => {
 		authenticated && axios
-			.get(booksUrl('/'), authHeader(token))
+			.get(booksUrl('?page=' + currentPage), authHeader(token))
 			.then(response => {
 				setBooks(response.data)
 				setReloadData(false)
 			})
 			.catch(() => setErrors([{ message: 'Internal error' }]))
-	}, [authenticated, reloadData])
+	}, [authenticated, reloadData, currentPage])
 
 
 	async function onDeleteClick(book) {
@@ -40,7 +42,11 @@ export default function Books() {
 
 	async function addToCartClick(book) {
 		authenticated && await axios
-			.post(cartUrl('/'), {'bookId': book.bookId}, authHeader(token))
+			.post(cartUrl('/product'), { 'bookId': book.bookId }, authHeader(token))
+	}
+
+	function handlePageChange(page) {
+		setCurrentPage(page)
 	}
 
 	return (
@@ -50,14 +56,17 @@ export default function Books() {
 				<>
 					{editingBook && <BookForm variant='edit' bookInitialState={editingBook} />}
 					{!editingBook &&
-						<div className="table-div">
-							<Header content="Books table" />
-							<BooksTable
-								books={books}
-								addToCartClick={addToCartClick}
-								onEditClick={onEditClick}
-								onDeleteClick={onDeleteClick} />
-						</div>
+						<>
+							<div className="table-div">
+								<Header content="Books table" />
+								<BooksTable
+									books={books}
+									addToCartClick={addToCartClick}
+									onEditClick={onEditClick}
+									onDeleteClick={onDeleteClick} />
+							</div>
+							<PaginationButtons currentPage={currentPage} handlePageChange={handlePageChange} />
+						</>
 					}
 				</>
 			)}

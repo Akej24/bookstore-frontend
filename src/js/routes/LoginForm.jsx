@@ -36,7 +36,7 @@ export default function LoginForm() {
 			})
 			.catch(error => {
 				setSuccess('')
-				setErrors(error.response.data.errors);
+				setErrors(error.response.data.errors)
 			})
 	}
 

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { SuccessMessage, ErrorMessages } from '../components/Messages'
 import { SubmitButton, ResetButton } from '../components/Buttons'
@@ -8,12 +8,12 @@ import Header from '../components/Header'
 import useAuthentication from '../shared/useAuthentication'
 import '../../css/components/Form.css'
 
-export default function BookForm({ accountInitialState }) {
+export default function AccountForm({ accountInitialState }) {
 
-    const [account, setAccount] = useState(accountInitialState);
+    const [account, setAccount] = useState({...accountInitialState, password: ''});
     const [success, setSuccess] = useState('')
-    const { token, authenticated, errors, setErrors } = useAuthentication();
-    const { username, password, firstName, lastName, dateOfBirth } = account;
+    const { token, authenticated, errors, setErrors } = useAuthentication()
+    const { username, password, firstName, lastName, dateOfBirth } = account
 
     function onInputChange(e) {
         const { name, value } = e.target
@@ -26,7 +26,7 @@ export default function BookForm({ accountInitialState }) {
     async function onSubmit(e) {
         e.preventDefault();
         try {
-            await axios.patch(usersUrl('/account'), account, authHeader(token));
+            await axios.patch(usersUrl('/account'), account, authHeader(token))
             setSuccess('Successfully edited');
             setErrors([]);
         } catch (error) {
@@ -60,7 +60,7 @@ export default function BookForm({ accountInitialState }) {
                             label="Password"
                             type="password"
                             name="password"
-                            placeholder="Enter your password"
+                            placeholder="Enter your current / new password"
                             value={password}
                             onChange={onInputChange}
                         />

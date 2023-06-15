@@ -11,7 +11,7 @@ export function ResetButton({ onReset, value }) {
                 value={value}
             />
         </div>
-    );
+    )
 }
 
 export function SubmitButton({ onSubmit, value }) {
@@ -25,5 +25,28 @@ export function SubmitButton({ onSubmit, value }) {
                 value={value}
             />
         </div>
-    );
+    )
+}
+
+export function PaginationButtons({ currentPage, handlePageChange }) {
+    return (
+        <div className="pagination-buttons">
+            <input
+                className="pagination-button"
+                disabled={currentPage === 0}
+                type="submit"
+                onClick={() => handlePageChange(currentPage - 1)}
+                value="Previous"
+            />
+            <span className="current-page">
+                {currentPage + 1}
+            </span>
+            <input
+                className="pagination-button"
+                type="submit"
+                onClick={() => handlePageChange(currentPage + 1)}
+                value="Next"
+            />
+        </div>
+    )
 }

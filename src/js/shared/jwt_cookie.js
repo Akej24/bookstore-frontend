@@ -4,19 +4,22 @@ export function extractJwtFromCookie() {
 			.split(';')
 			.find(cookie => cookie.trim().startsWith('Authorization='))
 			.split('=Bearer ')[1]
-			.trim();
+			.trim()
 	} catch (error) {
-		return '';
+		return ''
 	}
 }
 
 export function deleteJwtFromCookie(token){
-	const d = new Date();
-	d.setHours(d.getHours() - 1);
-	const utc = d.toUTCString();
-	document.cookie = 'Authorization=' + token + ';expires=' + utc;
+	const date = new Date()
+	date.setHours(date.getHours() - 1)
+	const utc = date.toUTCString()
+	document.cookie = 'Authorization=' + token + ';expires=' + utc
 }
 
 export function saveJwtToCookie(token) {
-	document.cookie = 'Authorization=' + token;
+	const date = new Date()
+	date.setHours(date.getHours() + 24)
+	const utc = date.toUTCString()
+	document.cookie = 'Authorization=' + token + ';expires=' + utc
 }
