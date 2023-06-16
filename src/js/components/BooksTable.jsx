@@ -1,18 +1,36 @@
-import { SubmitButton } from './Buttons'
+import { SortButton, SubmitButton } from './Buttons'
 
-function BookHeader() {
+function BookHeader({ handleSort }) {
     return (
         <thead className="books-table-thead">
             <tr>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Release date</th>
-                <th>Pages</th>
-                <th>Availability</th>
-                <th>Price</th>
-                <th>Add to cart</th>
-                <th>Edit</th>
-                <th>Delete</th>
+                <th>
+                    Title <SortButton handleSort={handleSort} value='bookTitle' />
+                </th>
+                <th>
+                    Author <SortButton handleSort={handleSort} value='bookAuthor' />
+                </th>
+                <th>
+                    Release date <SortButton handleSort={handleSort} value='releaseDate' />
+                </th>
+                <th>
+                    Pages <SortButton handleSort={handleSort} value='numberOfPages' />
+                </th>
+                <th>
+                    Availability <SortButton handleSort={handleSort} value='availabilityStatus' />
+                </th>
+                <th>
+                    Price <SortButton handleSort={handleSort} value='bookPrice' />
+                </th>
+                <th>
+                    Add to cart
+                </th>
+                <th>
+                    Edit
+                </th>
+                <th>
+                    Delete
+                </th>
             </tr>
         </thead>
     )
@@ -34,10 +52,10 @@ function BookRow({ book, addToCartClick, onEditClick, onDeleteClick }) {
     )
 }
 
-export default function BooksTable({ books, addToCartClick, onEditClick, onDeleteClick }) {
+export default function BooksTable({ books, addToCartClick, onEditClick, onDeleteClick, handleSort }) {
     return (
         <table>
-            <BookHeader />
+            <BookHeader handleSort={handleSort} />
             <tbody className="books-table-tbody">
                 {books.map((book) => (
                     <BookRow

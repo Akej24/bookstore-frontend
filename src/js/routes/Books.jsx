@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 
 import { ErrorMessages } from '../components/Messages'
-import { booksUrl, cartUrl, authHeader } from '../shared/constans'
+import { booksUrl, cartUrl, authHeader, sortOptionsInitialState } from '../shared/constans'
 import { PaginationButtons } from '../components/Buttons'
 import BooksTable from '../components/BooksTable'
 import useAuthentication from '../shared/useAuthentication'
@@ -18,17 +18,29 @@ export default function Books() {
 	const [currentPage, setCurrentPage] = useState(0)
 	const [reloadData, setReloadData] = useState(false)
 	const { token, authenticated, errors, setErrors } = useAuthentication()
+	const [sortOptions, setSortOptions] = useState(sortOptionsInitialState);
 
 	useEffect(() => {
 		authenticated && axios
-			.get(booksUrl('?page=' + currentPage), authHeader(token))
+			.get(booksUrl(`?page=${currentPage}&sortBy=${sortOptions.sortBy}&sortDirection=${sortOptions.sortDirection}`), authHeader(token))
 			.then(response => {
 				setBooks(response.data)
 				setReloadData(false)
 			})
 			.catch(() => setErrors([{ message: 'Internal error' }]))
-	}, [authenticated, reloadData, currentPage])
+	}, [authenticated, reloadData, currentPage, sortOptions])
 
+	const handleSort = (sortBy) => {
+		const newSortDirection = sortOptions.sortBy === sortBy && sortOptions.sortDirection === 'asc' ? 'desc' : 'asc';
+		setSortOptions({
+		    sortBy,
+		    sortDirection: newSortDirection,
+		});
+	}
+
+	function handlePageChange(page) {
+		setCurrentPage(page)
+	}
 
 	async function onDeleteClick(book) {
 		authenticated && await axios
@@ -45,10 +57,6 @@ export default function Books() {
 			.post(cartUrl('/product'), { 'bookId': book.bookId }, authHeader(token))
 	}
 
-	function handlePageChange(page) {
-		setCurrentPage(page)
-	}
-
 	return (
 		<>
 			{!authenticated && <div className="errorPage"><ErrorMessages errors={errors} /></div>}
@@ -63,7 +71,9 @@ export default function Books() {
 									books={books}
 									addToCartClick={addToCartClick}
 									onEditClick={onEditClick}
-									onDeleteClick={onDeleteClick} />
+									onDeleteClick={onDeleteClick}
+									handleSort={handleSort}
+								/>
 							</div>
 							<PaginationButtons currentPage={currentPage} handlePageChange={handlePageChange} />
 						</>

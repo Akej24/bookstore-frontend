@@ -12,6 +12,20 @@
     font-size: 1em;
 }
 
+.sort-button-div{
+    display: inline-block;
+}
+
+.sort-button{
+    padding: 5px;
+    margin-left: 20%;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 5px;
+    background: #1d2b3a;
+    color: var(--body-text-color);
+    font-size: 1em;
+}
+
 .pagination-button{
     padding: 8px;
     border: 2px solid rgba(255, 255, 255, 0.25);
@@ -34,6 +48,9 @@
     background-color: rgb(175, 11, 11);
 }
 .pagination-button:hover{
+    background-color: rgba(62,76,83,1);
+}
+.sort-button:hover{
     background-color: rgba(62,76,83,1);
 }
 

@@ -48,3 +48,8 @@ export const addressInitialState = {
     city: ''
 }
 
+export const sortOptionsInitialState = {
+    sortBy: 'releaseDate',
+    sortDirection: 'asc',
+}
+

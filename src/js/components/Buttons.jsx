@@ -28,6 +28,19 @@ export function SubmitButton({ onSubmit, value }) {
     )
 }
 
+export function SortButton({ handleSort, value }) {
+    return (
+        <div className="sort-button-div">
+            <input
+                className="sort-button"
+                type="submit"
+                onClick={() => handleSort(value)}
+                value='Sort'
+            />
+        </div>
+    )
+}
+
 export function PaginationButtons({ currentPage, handlePageChange }) {
     return (
         <div className="pagination-buttons">
