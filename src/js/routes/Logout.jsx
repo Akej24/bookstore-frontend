@@ -17,7 +17,10 @@ export default function Logout() {
         const token = extractJwtFromCookie()
         await axios
             .get(logoutUrl, authHeader(token))
-            .then(() => deleteJwtFromCookie(token), setSuccess('Successively logged out'))
+            .then(() => {
+                deleteJwtFromCookie(token) 
+                setSuccess('Successively logged out')
+            })
             .catch(error => setErrors(error.response?.data?.errors || 'Internal error'), setSuccess(''))
     }
 

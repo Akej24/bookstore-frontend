@@ -1,5 +1,25 @@
 import { SortButton, SubmitButton } from './Buttons'
 
+export default function BooksTable({ books, addToCartClick, onEditClick, onDeleteClick, handleSort, isAdmin }) {
+    return (
+        <table>
+            <BookHeader handleSort={handleSort} />
+            <tbody className="books-table-tbody">
+                {books.map((book) => (
+                    <BookRow
+                        key={book.bookId}
+                        book={book}
+                        addToCartClick={addToCartClick}
+                        onEditClick={onEditClick}
+                        onDeleteClick={onDeleteClick}
+                        isAdmin={isAdmin}
+                    />
+                ))}
+            </tbody>
+        </table>
+    )
+}
+
 function BookHeader({ handleSort }) {
     return (
         <thead className="books-table-thead">
@@ -37,36 +57,18 @@ function BookHeader({ handleSort }) {
 }
 
 function BookRow({ book, addToCartClick, onEditClick, onDeleteClick, isAdmin }) {
+    const { bookId, bookTitle, bookAuthor, releaseDate, numberOfPages, availablePieces, bookPrice } = book
     return (
-        <tr key={book.bookId}>
-            <td>{book.bookTitle}</td>
-            <td>{book.bookAuthor}</td>
-            <td>{book.releaseDate}</td>
-            <td>{book.numberOfPages}</td>
-            <td>{book.availablePieces < 1 ? 'none' : book.availablePieces}</td>
-            <td>{book.bookPrice} zł</td>
+        <tr key={bookId}>
+            <td>{bookTitle}</td>
+            <td>{bookAuthor}</td>
+            <td>{releaseDate}</td>
+            <td>{numberOfPages}</td>
+            <td>{availablePieces < 1 ? 'none' : availablePieces}</td>
+            <td>{bookPrice} zł</td>
             <td><SubmitButton onSubmit={() => addToCartClick(book)} value='Add' enabled={true} /></td>
             <td><SubmitButton onSubmit={() => onEditClick(book)} value='Edit' enabled={isAdmin} /></td>
             <td><SubmitButton onSubmit={() => onDeleteClick(book)} value='Delete' enabled={isAdmin} /></td>
         </tr>
-    )
-}
-
-export default function BooksTable({ books, addToCartClick, onEditClick, onDeleteClick, handleSort, isAdmin }) {
-    return (
-        <table>
-            <BookHeader handleSort={handleSort} />
-            <tbody className="books-table-tbody">
-                {books.map((book) => (
-                    <BookRow
-                        book={book}
-                        addToCartClick={addToCartClick}
-                        onEditClick={onEditClick}
-                        onDeleteClick={onDeleteClick}
-                        isAdmin={isAdmin}
-                    />
-                ))}
-            </tbody>
-        </table>
     )
 }

@@ -1,5 +1,26 @@
 import { SubmitButton } from './Buttons'
 
+export default function CartTable({ cartLines, onDecreaseClick, onIncreaseClick, onDeleteClick }) {
+    return (
+        <div className="table-div">
+            <table>
+                <CartHeader />
+                <tbody className="cart-table-tbody">
+                    {cartLines.map((cartLine) => (
+                        <CartRow
+                            key={cartLine.bookId}
+                            cartLine={cartLine}
+                            onDecreaseClick={onDecreaseClick}
+                            onIncreaseClick={onIncreaseClick}
+                            onDeleteClick={onDeleteClick}
+                        />
+                    ))}
+                </tbody>
+            </table>
+        </div>
+    )
+}
+
 function CartHeader() {
     return (
         <thead className="cart-table-thead">
@@ -17,35 +38,16 @@ function CartHeader() {
 }
 
 function CartRow({ cartLine, onDecreaseClick, onIncreaseClick, onDeleteClick }) {
+    const { bookId, bookTitle, bookAuthor, bookPrice, booksAmount } = cartLine
     return (
-        <tr key={cartLine.bookId}>
-            <td>{cartLine.bookTitle}</td>
-            <td>{cartLine.bookAuthor}</td>
-            <td>{cartLine.bookPrice} zł</td>
+        <tr key={bookId}>
+            <td>{bookTitle}</td>
+            <td>{bookAuthor}</td>
+            <td>{bookPrice} zł</td>
             <td><SubmitButton onSubmit={() => onDecreaseClick(cartLine.bookId)} value='Decrease' /></td>
-            <td>{cartLine.booksAmount}</td>
+            <td>{booksAmount}</td>
             <td><SubmitButton onSubmit={() => onIncreaseClick(cartLine.bookId)} value='Increase' /></td>
             <td><SubmitButton onSubmit={() => onDeleteClick(cartLine.bookId)} value='Delete' /></td>
         </tr>
-    )
-}
-
-export default function CartTable({ cartLines, onDecreaseClick, onIncreaseClick, onDeleteClick }) {
-    return (
-        <div className="table-div">
-            <table>
-                <CartHeader />
-                <tbody className="cart-table-tbody">
-                    {cartLines.map((cartLine) => (
-                        <CartRow
-                            cartLine={cartLine}
-                            onDecreaseClick={onDecreaseClick}
-                            onIncreaseClick={onIncreaseClick}
-                            onDeleteClick={onDeleteClick}
-                        />
-                    ))}
-                </tbody>
-            </table>
-        </div>
     )
 }

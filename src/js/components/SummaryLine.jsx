@@ -8,5 +8,5 @@ export default function SummaryLine({ content, value }) {
                 {value}
             </span>
         </div>
-    );
+    )
 }

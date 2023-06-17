@@ -15,7 +15,7 @@ export function InputField({ label, type, placeholder, name, value, onChange }) 
                 />
             </label>
         </div>
-    );
+    )
 }
 
 export function InputRadio({ label, name, value, checked, onChange }) {
@@ -35,7 +35,7 @@ export function InputRadio({ label, name, value, checked, onChange }) {
                 />
             </label>
         </div>
-    );
+    )
 }
 
 export function InputCheckbox({ label, name, checked, onChange }) {
@@ -54,5 +54,5 @@ export function InputCheckbox({ label, name, checked, onChange }) {
                 />
             </label>
         </div>
-    );
+    )
 }

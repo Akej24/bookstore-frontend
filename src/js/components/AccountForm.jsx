@@ -17,22 +17,19 @@ export default function AccountForm({ accountInitialState }) {
 
     function onInputChange(e) {
         const { name, value } = e.target
-        setAccount({
-            ...account,
+        setAccount(preAccount => ({
+            ...preAccount,
             [name]: value
-        })
+        }))
     }
 
     async function onSubmit(e) {
-        e.preventDefault();
-        try {
-            await axios.patch(accountUrl(''), account, authHeader(token))
-            setSuccess('Successfully edited');
-            setErrors([]);
-        } catch (error) {
-            setSuccess('');
-            setErrors(error.response.data.errors);
-        }
+        e.preventDefault()
+        await axios
+            .patch(accountUrl(''), account, authHeader(token))
+            .then(() => setSuccess('Successfully edited'), setErrors([]))
+            .catch(error => setErrors(error.response?.data?.errors || 'Internal error'))
+
     }
 
     function onReset(e) {
