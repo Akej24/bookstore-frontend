@@ -24,7 +24,7 @@ export default function RegistrationForm() {
 	}
 
 	async function onSubmit(e) {
-		e.preventDefault();
+		e.preventDefault()
 		await axios
 			.post(usersUrl('/registration'), user)
 			.then(() => setSuccess("Successively registered"), setErrors([]))

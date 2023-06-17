@@ -11,9 +11,9 @@ import useAuthentication from '../shared/useAuthentication'
 import '../../css/components/Form.css'
 
 export default function BookForm({ variant, bookInitialState }) {
-    const [book, setBook] = useState(bookInitialState || bookEmptyState);
+    const [book, setBook] = useState(bookInitialState || bookEmptyState)
     const [success, setSuccess] = useState('')
-    const { token, authenticated, errors, setErrors, isAdmin } = useAuthentication();
+    const { token, authenticated, errors, setErrors, isAdmin } = useAuthentication()
     const { bookId, bookTitle, bookAuthor, releaseDate, numberOfPages, availabilityStatus, availablePieces, bookPrice } = book
 
     function onInputChange(e) {

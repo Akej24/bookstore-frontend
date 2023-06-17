@@ -29,8 +29,8 @@ export default function Books() {
 	}, [authenticated, reloadData, currentPage, sortOptions])
 
 	function handleSort(sortBy) {
-		const toggleSortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
-		setSortOptions({ sortBy, sortDirection: toggleSortDirection });
+		const toggleSortDirection = sortDirection === 'asc' ? 'desc' : 'asc'
+		setSortOptions({ sortBy, sortDirection: toggleSortDirection })
 	}
 
 	function handlePageChange(page) {

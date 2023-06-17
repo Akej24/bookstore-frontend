@@ -4,9 +4,9 @@ import jwtDecode from 'jwt-decode'
 import { extractJwtFromCookie } from './jwt_cookie'
 
 export default function useAuthentication() {
-    const [token, setToken] = useState('');
-    const [authenticated, setAuthenticated] = useState(false);
-    const [errors, setErrors] = useState([]);
+    const [token, setToken] = useState('')
+    const [authenticated, setAuthenticated] = useState(false)
+    const [errors, setErrors] = useState([])
     const [isAdmin, setIsAdmin] = useState(false)
 
     useEffect(() => {
@@ -16,7 +16,7 @@ export default function useAuthentication() {
     }, [])
 
     useEffect(() => {
-        setErrors(authenticated ? [] : [{ message: 'Cannot load the page because you are not logged in' }]);
+        setErrors(authenticated ? [] : [{ message: 'Cannot load the page because you are not logged in' }])
     }, [authenticated])
 
 	useEffect(() => {

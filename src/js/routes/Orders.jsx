@@ -3,7 +3,7 @@ import axios from 'axios'
 
 import { ErrorMessages } from '../components/Messages'
 import { authHeader, orderUrl } from '../shared/constants'
-import { convertDateToSimpleFormat } from "../shared/converters";
+import { convertDateToSimpleFormat } from "../shared/converters"
 import Header from '../components/Header'
 import SummaryLine from '../components/SummaryLine'
 import useAuthentication from '../shared/useAuthentication'

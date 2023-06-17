@@ -14,7 +14,7 @@ export default function LoginForm() {
 	const [user, setUser] = useState(loginUserInitialState)
 	const [errors, setErrors] = useState([])
 	const [success, setSuccess] = useState('')
-	const { email, password } = user;
+	const { email, password } = user
 
 	function onInputChange(e) {
 		const { name, value } = e.target
@@ -25,14 +25,14 @@ export default function LoginForm() {
 	}
 
 	async function onSubmit(e) {
-		e.preventDefault();
+		e.preventDefault()
 		await axios
 			.post(loginUrl, user)
 			.then((response) => {
 				const token = response.headers.authorization
 				saveJwtToCookie(token)
-				setSuccess('Successively logged in');
-				setErrors([]);
+				setSuccess('Successively logged in')
+				setErrors([])
 			})
 			.catch(error => setErrors(error.response?.data?.errors || 'Internal error'), setSuccess(''))
 	}

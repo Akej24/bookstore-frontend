@@ -1,4 +1,4 @@
-import '../../css/components/Messages.css';
+import '../../css/components/Messages.css'
 
 export function ErrorMessages({ errors }) {
     return (
@@ -11,7 +11,7 @@ export function ErrorMessages({ errors }) {
                 ))}
             </div>
         )
-    );
+    )
 }
 
 export function SuccessMessage({ success }) {
@@ -21,5 +21,5 @@ export function SuccessMessage({ success }) {
                 {success}
             </div>
         )
-    );
+    )
 }

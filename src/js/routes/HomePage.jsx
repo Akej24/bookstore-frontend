@@ -37,5 +37,5 @@ export default function HomePage() {
                 </ul>
             </div>
         </div>
-    );
+    )
 }

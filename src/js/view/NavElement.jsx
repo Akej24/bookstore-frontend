@@ -5,8 +5,7 @@ export default function NavElement({ name, href }) {
                 <span className="nav-span">
                     {name}
                 </span>
-
             </div>
         </a>
-    );
+    )
 }
