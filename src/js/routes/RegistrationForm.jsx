@@ -14,27 +14,21 @@ export default function RegistrationForm() {
 	const [user, setUser] = useState(registerUserInitialState)
 	const [errors, setErrors] = useState([])
 	const [success, setSuccess] = useState('')
-	const { email, username, password, firstName, lastName, dateOfBirth, role } = user;
+	const { email, username, password, firstName, lastName, dateOfBirth, role } = user
 
 	function onInputChange(e) {
-		setUser({
-			...user,
+		setUser(prevUser => ({
+			...prevUser,
 			[e.target.name]: e.target.value
-		})
+		}))
 	}
 
 	async function onSubmit(e) {
 		e.preventDefault();
 		await axios
 			.post(usersUrl('/registration'), user)
-			.then(() => {
-				setSuccess("Successively registered")
-				setErrors([])
-			})
-			.catch(error => {
-				setSuccess('')
-				setErrors(error.response.data.errors)
-			})
+			.then(() => setSuccess("Successively registered"), setErrors([]))
+			.catch(error => setErrors(error.response?.data?.errors || 'Internal error'), setSuccess(''))
 	}
 
 	function onReset(e) {
@@ -117,5 +111,5 @@ export default function RegistrationForm() {
 				<ErrorMessages errors={errors} />
 			</form>
 		</div>
-	);
+	)
 }

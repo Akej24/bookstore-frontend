@@ -53,7 +53,7 @@ export default function Cart() {
     async function onCheckoutClick() {
         authenticated && await axios
             .post(checkoutCartUrl(''), null, authHeader(token))
-            .then(() => setSuccess('Succcessively checked out'))
+            .then(() => setErrors([]), setSuccess('Succcessively checked out'))
             .catch(error => setErrors(error.response?.data?.errors || 'Internal error'))
     }
 
@@ -86,5 +86,5 @@ export default function Cart() {
                 </>
             )}
         </>
-    );
+    )
 }

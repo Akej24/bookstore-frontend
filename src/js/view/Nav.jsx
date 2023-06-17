@@ -1,5 +1,5 @@
 import NavElement from './NavElement'
-import '../../css/view/Nav.css';
+import '../../css/view/Nav.css'
 
 export default function Nav() {
     return (

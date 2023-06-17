@@ -11,17 +11,17 @@ import Header from '../components/Header'
 import '../../css/components/Form.css'
 
 export default function LoginForm() {
-
 	const [user, setUser] = useState(loginUserInitialState)
 	const [errors, setErrors] = useState([])
 	const [success, setSuccess] = useState('')
 	const { email, password } = user;
 
 	function onInputChange(e) {
-		setUser({
-			...user,
-			[e.target.name]: e.target.value
-		})
+		const { name, value } = e.target
+		setUser(prevUser => ({
+			...prevUser,
+			[name]: value
+		}))
 	}
 
 	async function onSubmit(e) {
@@ -31,13 +31,10 @@ export default function LoginForm() {
 			.then((response) => {
 				const token = response.headers.authorization
 				saveJwtToCookie(token)
-				setSuccess("Successively logged in");
+				setSuccess('Successively logged in');
 				setErrors([]);
 			})
-			.catch(error => {
-				setSuccess('')
-				setErrors(error.response.data.errors)
-			})
+			.catch(error => setErrors(error.response?.data?.errors || 'Internal error'), setSuccess(''))
 	}
 
 	function onReset() {
@@ -74,5 +71,5 @@ export default function LoginForm() {
 				<ErrorMessages errors={errors} />
 			</form>
 		</div>
-	);
+	)
 }

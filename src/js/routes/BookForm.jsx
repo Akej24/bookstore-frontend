@@ -18,7 +18,7 @@ export default function BookForm({ variant, bookInitialState }) {
 
     function onInputChange(e) {
         const { name, value, type, checked } = e.target
-        setBook( prevBook => ({
+        setBook(prevBook => ({
             ...prevBook,
             [name]: type === "checkbox" ? checked : (type === "number" ? parseFloat(value) : value)
         }))
@@ -117,5 +117,5 @@ export default function BookForm({ variant, bookInitialState }) {
                 </div>
             )}
         </>
-    );
+    )
 }

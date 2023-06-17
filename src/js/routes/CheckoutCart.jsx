@@ -14,7 +14,6 @@ import '../../css/routes/CheckoutCart.css'
 import '../../css/components/Form.css'
 
 export default function CheckoutCart() {
-
     const [summaryPaymentMethod, setSummaryPaymentMethod] = useState('')
     const [summaryAddress, setSummaryAddress] = useState([])
     const [paymentMethod, setPaymentMethod] = useState('')
@@ -22,30 +21,29 @@ export default function CheckoutCart() {
     const [reloadData, setReloadData] = useState(false)
     const [success, setSuccess] = useState('')
     const { token, authenticated, errors, setErrors } = useAuthentication()
-    const { firstName, lastName, phoneNumber, street, streetNumber, zipCode, city } = address;
+    const { firstName, lastName, phoneNumber, street, streetNumber, zipCode, city } = address
 
     useEffect(() => {
         authenticated && axios
             .get(checkoutCartUrl(''), authHeader(token))
             .then(response => {
-                setSummaryPaymentMethod(response.data.paymentMethod || '');
-                setSummaryAddress(response.data.address || []);
+                setSummaryPaymentMethod(response.data.paymentMethod || '')
+                setSummaryAddress(response.data.address || [])
                 setReloadData(false)
             })
-            .catch((error) => setErrors(error.response.data.errors || []))
+            .catch(error => setErrors(error.response?.data?.errors || 'Internal error'), setSuccess(''))
     }, [authenticated, reloadData])
 
     function onPaymentInputChange(e) {
-        const { value } = e.target
-        setPaymentMethod(value)
+        setPaymentMethod(e.target.value)
     }
 
     function onAddressInputChange(e) {
         const { name, value, type } = e.target
-        setAddress({
-            ...address,
+        setAddress(prevAddress => ({
+            ...prevAddress,
             [name]: type === 'number' ? Number(value) : value
-        })
+        }))
     }
 
     function onPaymentMethodReset() {
@@ -62,35 +60,28 @@ export default function CheckoutCart() {
 
     async function onAddPaymentClick(e) {
         e.preventDefault()
-        setSuccess('')
-        setErrors([])
         authenticated && await axios
             .patch(checkoutCartUrl('/payment'), { 'paymentMethod': paymentMethod }, authHeader(token))
-            .then(() => setSuccess('Succcessively added payment method'))
-            .catch(error => setErrors(error.response.data.errors))
-        setReloadData(true)
+            .then(() => setSuccess('Succcessively added payment method'), setErrors([]))
+            .catch(error => setErrors(error.response?.data?.errors || 'Internal error'), setSuccess(''))
+            .finally(() => setReloadData(true))
     }
 
     async function onAddAddressClick(e) {
-        console.log({ address })
         e.preventDefault()
-        setSuccess('')
-        setErrors([])
         authenticated && await axios
             .patch(checkoutCartUrl('/address'), address, authHeader(token))
-            .then(() => setSuccess('Succcessively added address'))
-            .catch(error => setErrors(error.response.data.errors))
-        setReloadData(true)
+            .then(() => setSuccess('Succcessively added address'), setErrors([]))
+            .catch(error => setErrors(error.response?.data?.errors || 'Internal error'), setSuccess(''))
+            .finally(() => setReloadData(true))
     }
 
     async function onOrderClick(e) {
         e.preventDefault()
-        setSuccess('')
-        setErrors([])
         authenticated && await axios
             .post(orderUrl(''), null, authHeader(token))
-            .then(() => setSuccess('Succcessively orderd and e-mail sent'))
-            .catch(error => setErrors(error.response.data.errors))
+            .then(() => setSuccess('Succcessively orderd and e-mail sent'), setErrors([]))
+            .catch(error => setErrors(error.response?.data?.errors || 'Internal error'), setSuccess(''))
     }
 
     return (
@@ -218,5 +209,5 @@ export default function CheckoutCart() {
                 </>
             )}
         </>
-    );
+    )
 }

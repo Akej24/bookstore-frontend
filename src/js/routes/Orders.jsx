@@ -11,7 +11,6 @@ import useAuthentication from '../shared/useAuthentication'
 import '../../css/routes/Orders.css'
 
 export default function Orders() {
-
     const [orders, setOrders] = useState([])
     const { token, authenticated, errors, setErrors } = useAuthentication()
 
@@ -19,7 +18,7 @@ export default function Orders() {
         authenticated && axios
             .get(orderUrl(''), authHeader(token))
             .then(response => setOrders(response.data))
-            .catch(() => setErrors([{ message: 'Internal error' }]))
+            .catch(error => setErrors(error.response?.data?.errors || 'Internal error'))
     }, [authenticated])
 
 
@@ -52,5 +51,5 @@ export default function Orders() {
                 </div>
             )}
         </>
-    );
+    )
 }
