@@ -3,14 +3,14 @@ import axios from 'axios'
 import { SuccessMessage, ErrorMessages } from '../components/Messages'
 import { SubmitButton, ResetButton } from '../components/Buttons'
 import { InputField } from '../components/Inputs'
-import { authHeader, usersUrl } from '../shared/constans'
+import { authHeader, accountUrl } from '../shared/constants'
 import Header from '../components/Header'
 import useAuthentication from '../shared/useAuthentication'
 import '../../css/components/Form.css'
 
 export default function AccountForm({ accountInitialState }) {
 
-    const [account, setAccount] = useState({...accountInitialState, password: ''});
+    const [account, setAccount] = useState({ ...accountInitialState, password: '' });
     const [success, setSuccess] = useState('')
     const { token, authenticated, errors, setErrors } = useAuthentication()
     const { username, password, firstName, lastName, dateOfBirth } = account
@@ -26,7 +26,7 @@ export default function AccountForm({ accountInitialState }) {
     async function onSubmit(e) {
         e.preventDefault();
         try {
-            await axios.patch(usersUrl('/account'), account, authHeader(token))
+            await axios.patch(accountUrl(''), account, authHeader(token))
             setSuccess('Successfully edited');
             setErrors([]);
         } catch (error) {

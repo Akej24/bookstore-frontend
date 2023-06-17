@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 
 import { ErrorMessages } from '../components/Messages'
-import { usersUrl, authHeader } from '../shared/constans'
+import { accountUrl, authHeader } from '../shared/constants'
 import { SubmitButton } from '../components/Buttons'
 import AccountForm from '../components/AccountForm'
 import SummaryLine from '../components/SummaryLine'
@@ -12,20 +12,20 @@ import Header from '../components/Header'
 import '../../css/routes/Account.css'
 
 export default function Account() {
-
     const [account, setAccount] = useState([])
     const [editingAccount, setEditingAccount] = useState(null)
     const { token, authenticated, errors, setErrors } = useAuthentication()
+    const { email, username, firstName, lastName, dateOfBirth, funds } = account
 
     useEffect(() => {
         authenticated && axios
-            .get(usersUrl('/account'), authHeader(token))
+            .get(accountUrl(''), authHeader(token))
             .then(response => setAccount(response.data))
-            .catch(() => setErrors([{ message: 'Internal error' }]))
+            .catch(error => setErrors(error.response?.data?.errors || 'Internal error'))
     }, [authenticated])
 
-    async function onEditClick(account) {
-        setEditingAccount(account);
+    async function onEditClick(clickedAccount) {
+        setEditingAccount(clickedAccount)
     }
 
     return (
@@ -38,30 +38,12 @@ export default function Account() {
                         <div className="account">
                             <Header content="Account" />
                             <div className="account-summary">
-                                <SummaryLine
-                                    content="E-mail"
-                                    value={account.email}
-                                />
-                                <SummaryLine
-                                    content="Username"
-                                    value={account.username}
-                                />
-                                <SummaryLine
-                                    content="First name"
-                                    value={account.firstName}
-                                />
-                                <SummaryLine
-                                    content="Last name"
-                                    value={account.lastName}
-                                />
-                                <SummaryLine
-                                    content="Date of birth"
-                                    value={account.dateOfBirth}
-                                />
-                                <SummaryLine
-                                    content="Funds"
-                                    value={account.funds + ' zł'}
-                                />
+                                <SummaryLine content="E-mail" value={email} />
+                                <SummaryLine content="Username" value={username} />
+                                <SummaryLine content="First name" value={firstName} />
+                                <SummaryLine content="Last name" value={lastName} />
+                                <SummaryLine content="Date of birth" value={dateOfBirth} />
+                                <SummaryLine content="Funds" value={funds + ' zł'} />
                             </div>
                             <div className="account-edit">
                                 <SubmitButton onSubmit={onEditClick} value="Edit account" />

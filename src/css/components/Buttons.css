@@ -28,6 +28,7 @@
 
 .pagination-button{
     padding: 8px;
+    margin-bottom: 3%;
     border: 2px solid rgba(255, 255, 255, 0.25);
     border-radius: 5px;
     background: #1d2b3a;
@@ -44,14 +45,25 @@
 #submit-button:hover{
     background-color: rgba(212, 132, 11, 0.836);
 }
+
 #reset-button:hover{
     background-color: rgb(175, 11, 11);
 }
-.pagination-button:hover{
-    background-color: rgba(62,76,83,1);
-}
+
+.pagination-button:hover, 
 .sort-button:hover{
     background-color: rgba(62,76,83,1);
+}
+
+.disabled-button{
+    width: 100%;
+    padding: 4%;
+    border: 2px solid rgba(255, 255, 255, 0.25);
+    border-radius: 5px;
+    background-color: rgb(54, 45, 45);
+    color: var(--body-text-color);
+    pointer-events: none;
+    font-size: 1em;
 }
 
 

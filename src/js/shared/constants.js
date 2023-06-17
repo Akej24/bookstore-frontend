@@ -3,6 +3,7 @@ const DOMAIN_URL = 'http://localhost:8080/api/v1/'
 export const logoutUrl = DOMAIN_URL + 'logout'
 export const loginUrl = DOMAIN_URL + 'login'
 export const usersUrl = (path) => DOMAIN_URL + 'users' + path
+export const accountUrl = (path) => DOMAIN_URL + 'account' + path
 export const booksUrl = (path) => DOMAIN_URL + 'books' + path
 export const cartUrl = (path) => DOMAIN_URL + 'cart' + path
 export const checkoutCartUrl = (path) => DOMAIN_URL + 'checkoutcart' + path

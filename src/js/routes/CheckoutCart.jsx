@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 
 import { ErrorMessages } from '../components/Messages'
-import { addressInitialState, authHeader, checkoutCartUrl, orderUrl } from '../shared/constans'
+import { addressInitialState, authHeader, checkoutCartUrl, orderUrl } from '../shared/constants'
 import { SubmitButton, ResetButton } from '../components/Buttons'
 import { SuccessMessage } from '../components/Messages'
 import { InputField, InputRadio } from '../components/Inputs'
@@ -72,7 +72,7 @@ export default function CheckoutCart() {
     }
 
     async function onAddAddressClick(e) {
-        console.log({address})
+        console.log({ address })
         e.preventDefault()
         setSuccess('')
         setErrors([])

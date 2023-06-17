@@ -2,7 +2,7 @@ import { useState } from 'react'
 import axios from 'axios'
 
 import Header from '../components/Header'
-import { registerUserInitialState, usersUrl } from '../shared/constans'
+import { registerUserInitialState, usersUrl } from '../shared/constants'
 import { InputField, InputRadio } from '../components/Inputs'
 import { SubmitButton, ResetButton } from '../components/Buttons'
 import { SuccessMessage, ErrorMessages } from '../components/Messages'

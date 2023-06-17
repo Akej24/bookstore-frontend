@@ -2,7 +2,7 @@ import { useState } from 'react'
 import axios from 'axios'
 
 import { extractJwtFromCookie, deleteJwtFromCookie } from '../shared/jwt_cookie'
-import { logoutUrl, authHeader } from '../shared/constans'
+import { logoutUrl, authHeader } from '../shared/constants'
 import { SuccessMessage } from '../components/Messages'
 import { SubmitButton } from '../components/Buttons'
 

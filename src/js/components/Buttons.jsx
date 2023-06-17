@@ -14,15 +14,15 @@ export function ResetButton({ onReset, value }) {
     )
 }
 
-export function SubmitButton({ onSubmit, value }) {
+export function SubmitButton({ onSubmit, value, enabled=true }) {
     return (
         <div className="button-div">
             <input
-                className="button"
-                id="submit-button"
+                className={enabled ? 'button' : 'disabled-button'}
+                id={enabled ? 'submit-button' : ''}
                 type="submit"
                 onClick={onSubmit}
-                value={value}
+                value={enabled ? value : 'Disabled'}
             />
         </div>
     )

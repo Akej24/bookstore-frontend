@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 
 import { ErrorMessages } from '../components/Messages'
-import { cartUrl, authHeader, checkoutCartUrl } from '../shared/constans'
+import { cartUrl, authHeader, checkoutCartUrl } from '../shared/constants'
 import { SubmitButton } from '../components/Buttons'
 import { SuccessMessage } from '../components/Messages'
 import SummaryLine from '../components/SummaryLine'
@@ -52,12 +52,12 @@ export default function Cart() {
         setErrors([]);
         setSuccess('');
         authenticated &&
-          await axios
-            .delete(cartUrl('/product/' + bookId), authHeader(token))
-            .catch((error) => setErrors(error.response.data.errors));
+            await axios
+                .delete(cartUrl('/product/' + bookId), authHeader(token))
+                .catch((error) => setErrors(error.response.data.errors));
         setReloadData(true);
         cart.cartLines.length === 1 && setCart([]);
-      }
+    }
 
     async function onCheckoutClick() {
         setSuccess('')

@@ -36,7 +36,7 @@ function BookHeader({ handleSort }) {
     )
 }
 
-function BookRow({ book, addToCartClick, onEditClick, onDeleteClick }) {
+function BookRow({ book, addToCartClick, onEditClick, onDeleteClick, isAdmin }) {
     return (
         <tr key={book.bookId}>
             <td>{book.bookTitle}</td>
@@ -45,14 +45,14 @@ function BookRow({ book, addToCartClick, onEditClick, onDeleteClick }) {
             <td>{book.numberOfPages}</td>
             <td>{book.availablePieces < 1 ? 'none' : book.availablePieces}</td>
             <td>{book.bookPrice} zł</td>
-            <td><SubmitButton onSubmit={() => addToCartClick(book)} value='Add' /></td>
-            <td><SubmitButton onSubmit={() => onEditClick(book)} value='Edit' /></td>
-            <td><SubmitButton onSubmit={() => onDeleteClick(book)} value='Delete' /></td>
+            <td><SubmitButton onSubmit={() => addToCartClick(book)} value='Add' enabled={true} /></td>
+            <td><SubmitButton onSubmit={() => onEditClick(book)} value='Edit' enabled={isAdmin} /></td>
+            <td><SubmitButton onSubmit={() => onDeleteClick(book)} value='Delete' enabled={isAdmin} /></td>
         </tr>
     )
 }
 
-export default function BooksTable({ books, addToCartClick, onEditClick, onDeleteClick, handleSort }) {
+export default function BooksTable({ books, addToCartClick, onEditClick, onDeleteClick, handleSort, isAdmin }) {
     return (
         <table>
             <BookHeader handleSort={handleSort} />
@@ -63,6 +63,7 @@ export default function BooksTable({ books, addToCartClick, onEditClick, onDelet
                         addToCartClick={addToCartClick}
                         onEditClick={onEditClick}
                         onDeleteClick={onDeleteClick}
+                        isAdmin={isAdmin}
                     />
                 ))}
             </tbody>

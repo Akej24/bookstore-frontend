@@ -4,7 +4,7 @@ import axios from 'axios'
 import { SuccessMessage, ErrorMessages } from '../components/Messages'
 import { InputField } from '../components/Inputs'
 import { SubmitButton, ResetButton } from '../components/Buttons'
-import { loginUrl, loginUserInitialState } from '../shared/constans'
+import { loginUrl, loginUserInitialState } from '../shared/constants'
 import { saveJwtToCookie } from '../shared/jwt_cookie'
 import Header from '../components/Header'
 

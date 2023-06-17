@@ -1,43 +1,42 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import axios from 'axios'
 
 import { SuccessMessage, ErrorMessages } from '../components/Messages'
 import { SubmitButton, ResetButton } from '../components/Buttons'
 import { InputField, InputCheckbox } from '../components/Inputs'
-import { bookEmptyState, booksUrl, authHeader } from '../shared/constans'
+import { bookEmptyState, booksUrl, authHeader } from '../shared/constants'
 import Header from '../components/Header'
 import useAuthentication from '../shared/useAuthentication'
 
 import '../../css/components/Form.css'
 
 export default function BookForm({ variant, bookInitialState }) {
-
     const [book, setBook] = useState(bookInitialState || bookEmptyState);
     const [success, setSuccess] = useState('')
-    const { token, authenticated, errors, setErrors } = useAuthentication();
+    const { token, authenticated, errors, setErrors, isAdmin } = useAuthentication();
     const { bookId, bookTitle, bookAuthor, releaseDate, numberOfPages, availabilityStatus, availablePieces, bookPrice } = book
 
     function onInputChange(e) {
         const { name, value, type, checked } = e.target
-        setBook({
-            ...book,
+        setBook( prevBook => ({
+            ...prevBook,
             [name]: type === "checkbox" ? checked : (type === "number" ? parseFloat(value) : value)
-        })
+        }))
     }
 
     async function onSubmit(e) {
-        e.preventDefault();
+        e.preventDefault()
         try {
             if (variant === 'create') {
-                await axios.post(booksUrl(''), book, authHeader(token));
+                await axios.post(booksUrl(''), book, authHeader(token))
             } else if (variant === 'edit') {
-                await axios.put(booksUrl('/') + book.bookId, book, authHeader(token));
+                await axios.put(booksUrl(`/${book.bookId}`), book, authHeader(token))
             }
-            setSuccess('Successfully ' + (variant === 'create' ? 'added' : 'edited'));
-            setErrors([]);
+            setSuccess(`Successfully ${variant === 'create' ? 'added' : 'edited'}`)
+            setErrors([])
         } catch (error) {
-            setSuccess('');
-            setErrors(error.response.data.errors);
+            setSuccess('')
+            setErrors(error.response?.data?.errors || 'Internal error')
         }
     }
 
@@ -109,7 +108,7 @@ export default function BookForm({ variant, bookInitialState }) {
                             onChange={onInputChange}
                         />
                         <div className="buttons-container">
-                            <SubmitButton onSubmit={onSubmit} value="Submit" />
+                            <SubmitButton onSubmit={onSubmit} value="Submit" enabled={isAdmin} />
                             <ResetButton onReset={onReset} value="Reset" />
                         </div>
                         <SuccessMessage success={success} />
