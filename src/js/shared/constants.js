@@ -8,6 +8,7 @@ export const booksUrl = (path) => DOMAIN_URL + 'books' + path
 export const cartUrl = (path) => DOMAIN_URL + 'cart' + path
 export const checkoutCartUrl = (path) => DOMAIN_URL + 'checkoutcart' + path
 export const orderUrl = (path) => DOMAIN_URL + 'orders' + path
+export const deliveriesUrl = (path) => DOMAIN_URL + 'deliveries' + path
 
 export const authHeader = (token) => {
     return { headers: {Authorization: `Bearer ${token}`, }, }

@@ -5,7 +5,7 @@ export default function BooksTable({ books, addToCartClick, onEditClick, onDelet
         <table>
             <BookHeader handleSort={handleSort} />
             <tbody className="books-table-tbody">
-                {books.map((book) => (
+                {books.map(book => (
                     <BookRow
                         key={book.bookId}
                         book={book}

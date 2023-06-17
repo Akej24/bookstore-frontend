@@ -26,6 +26,7 @@ export default function Books() {
 			.get(booksUrl(`?page=${currentPage}&sortBy=${sortBy}&sortDirection=${sortDirection}`), authHeader(token))
 			.then(response => setBooks(response.data), setReloadData(false))
 			.catch(error => setErrors(error.response?.data?.errors || 'Internal error'))
+		console.log(booksUrl(`?page=${currentPage}&sortBy=${sortBy}&sortDirection=${sortDirection}`), authHeader(token))
 	}, [authenticated, reloadData, currentPage, sortOptions])
 
 	function handleSort(sortBy) {
@@ -34,6 +35,7 @@ export default function Books() {
 	}
 
 	function handlePageChange(page) {
+		setSuccess('')
 		setCurrentPage(page)
 	}
 

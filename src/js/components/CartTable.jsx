@@ -6,7 +6,7 @@ export default function CartTable({ cartLines, onDecreaseClick, onIncreaseClick,
             <table>
                 <CartHeader />
                 <tbody className="cart-table-tbody">
-                    {cartLines.map((cartLine) => (
+                    {cartLines.map(cartLine => (
                         <CartRow
                             key={cartLine.bookId}
                             cartLine={cartLine}
