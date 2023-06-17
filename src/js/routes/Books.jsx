@@ -46,7 +46,7 @@ export default function Books() {
 			.delete(booksUrl(`/${book.bookId}`), authHeader(token))
 			.then(() => setSuccess('Successfully deleted'), setErrors([]))
 			.catch(error => setErrors(error.response?.data?.errors || 'Internal error'), setSuccess(''))
-			.finally(setReloadData(true))
+			.finally(() => setReloadData(true))
 	}
 
 	async function addToCartClick(book) {

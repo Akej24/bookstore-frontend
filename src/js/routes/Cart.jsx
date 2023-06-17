@@ -14,7 +14,6 @@ import '../../css/routes/Cart.css'
 import '../../css/components/Table.css'
 
 export default function Cart() {
-
     const [cart, setCart] = useState([])
     const [reloadData, setReloadData] = useState(false)
     const [success, setSuccess] = useState('')
@@ -23,48 +22,39 @@ export default function Cart() {
     useEffect(() => {
         authenticated && axios
             .get(cartUrl(''), authHeader(token))
-            .then(response => {
-                setCart(response.data)
-                setReloadData(false)
-            })
-            .catch((error) => setErrors(error.response.data.errors))
+            .then(response => setCart(response.data), setReloadData(false))
+            .catch(error => setErrors(error.response?.data?.errors || 'Internal error'))
     }, [authenticated, reloadData])
 
     async function onDecreaseClick(bookId) {
-        setErrors([])
-        setSuccess('')
         authenticated && await axios
             .patch(cartUrl('/product/decrease'), { 'bookId': bookId }, authHeader(token))
-            .catch(error => setErrors(error.response.data.errors));
-        setReloadData(true)
+            .then(() => setErrors([]), setSuccess(''))
+            .catch(error => setErrors(error.response?.data?.errors || 'Internal error'))
+            .finally(() => setReloadData(true))
     }
 
     async function onIncreaseClick(bookId) {
-        setErrors([])
-        setSuccess('')
         authenticated && await axios
             .patch(cartUrl('/product/increase'), { 'bookId': bookId }, authHeader(token))
-            .catch(error => setErrors(error.response.data.errors));
-        setReloadData(true)
+            .then(() => setErrors([]), setSuccess(''))
+            .catch(error => setErrors(error.response?.data?.errors || 'Internal error'))
+            .finally(() => setReloadData(true))
     }
 
     async function onDeleteClick(bookId) {
-        setErrors([]);
-        setSuccess('');
-        authenticated &&
-            await axios
-                .delete(cartUrl('/product/' + bookId), authHeader(token))
-                .catch((error) => setErrors(error.response.data.errors));
-        setReloadData(true);
-        cart.cartLines.length === 1 && setCart([]);
+        authenticated && await axios
+            .delete(cartUrl('/product/' + bookId), authHeader(token))
+            .then(() => setErrors([]), setSuccess(''))
+            .catch(error => setErrors(error.response?.data?.errors || 'Internal error'))
+            .finally(() => setReloadData(true), cart.cartLines.length === 1 && setCart([]))
     }
 
     async function onCheckoutClick() {
-        setSuccess('')
         authenticated && await axios
             .post(checkoutCartUrl(''), null, authHeader(token))
             .then(() => setSuccess('Succcessively checked out'))
-            .catch(error => setErrors(error.response.data.errors))
+            .catch(error => setErrors(error.response?.data?.errors || 'Internal error'))
     }
 
     return (
