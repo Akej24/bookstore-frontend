@@ -17,26 +17,25 @@ export default function Deliveries(){
 
     useEffect(() => {
         isAdmin === false ? setErrors([{message: 'You do not have administrator permission'}]) : setErrors([''])
+        setReloadData(false)
         authenticated && isAdmin && axios
             .get(deliveriesUrl(''), authHeader(token))
-            .then(response => setDeliveries(response.data), setReloadData(false), setErrors([]))
+            .then(response => setDeliveries(response.data), setErrors([]))
             .catch(error => setErrors(error.response?.data?.errors || 'Internal error'))
     }, [authenticated, isAdmin, reloadData])
 
     async function onMarkAsSentClick(deliveryNumber) {
         authenticated && await axios
             .post(deliveriesUrl('/send/' + deliveryNumber), null, authHeader(token))
-            .then(() => setErrors([]), setSuccess('Successfully marked as send'))
+            .then(() => setSuccess('Successfully marked as send'), setErrors([]), setReloadData(true))
             .catch(error => setErrors(error.response?.data?.errors || 'Internal error'))
-            .finally(() => setReloadData(true))
     }
 
     async function onMarkAsReceivedClick(deliveryNumber) {
         authenticated && await axios
             .post(deliveriesUrl('/receive/' + deliveryNumber), null, authHeader(token))
-            .then(() => setErrors([]), setSuccess('Successfully marked as received'))
+            .then(() => setSuccess('Successfully marked as received'), setErrors([]), setReloadData(true))
             .catch(error => setErrors(error.response?.data?.errors || 'Internal error'))
-            .finally(() => setReloadData(true))
     }
 
     return (

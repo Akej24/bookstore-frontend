@@ -24,12 +24,12 @@ export default function CheckoutCart() {
     const { firstName, lastName, phoneNumber, street, streetNumber, zipCode, city } = address
 
     useEffect(() => {
+        setReloadData(false)
         authenticated && axios
             .get(checkoutCartUrl(''), authHeader(token))
             .then(response => {
                 setSummaryPaymentMethod(response.data.paymentMethod || '')
                 setSummaryAddress(response.data.address || [])
-                setReloadData(false)
             })
             .catch(error => setErrors(error.response?.data?.errors || 'Internal error'), setSuccess(''))
     }, [authenticated, reloadData])
@@ -55,33 +55,38 @@ export default function CheckoutCart() {
     function onAddressReset() {
         setErrors([])
         setSuccess('')
-        setAddress([])
+        setAddress(addressInitialState)
     }
 
     async function onAddPaymentClick(e) {
         e.preventDefault()
         authenticated && await axios
             .patch(checkoutCartUrl('/payment'), { 'paymentMethod': paymentMethod }, authHeader(token))
-            .then(() => setSuccess('Succcessively added payment method'), setErrors([]))
+            .then(() => setSuccess('Succcessively added payment method'), setErrors([]), setReloadData(true))
             .catch(error => setErrors(error.response?.data?.errors || 'Internal error'), setSuccess(''))
-            .finally(() => setReloadData(true))
     }
 
     async function onAddAddressClick(e) {
         e.preventDefault()
         authenticated && await axios
             .patch(checkoutCartUrl('/address'), address, authHeader(token))
-            .then(() => setSuccess('Succcessively added address'), setErrors([]))
+            .then(() => setSuccess('Succcessively added address'), setErrors([]), setReloadData(true))
             .catch(error => setErrors(error.response?.data?.errors || 'Internal error'), setSuccess(''))
-            .finally(() => setReloadData(true))
     }
 
     async function onOrderClick(e) {
         e.preventDefault()
-        authenticated && await axios
-            .post(orderUrl(''), null, authHeader(token))
-            .then(() => setSuccess('Succcessively orderd and e-mail sent'), setErrors([]))
-            .catch(error => setErrors(error.response?.data?.errors || 'Internal error'), setSuccess(''))
+        setSuccess('Waiting for response...')
+        if(authenticated){
+            try {
+                await axios.post(orderUrl(''), null, authHeader(token))
+                setSuccess('Successfully ordered and e-mail sent')
+                setErrors([])
+            } catch(error) {
+                setErrors(error.response?.data?.errors || 'Internal error')
+                setSuccess('')
+            }
+        }
     }
 
     return (
