@@ -1,4 +1,4 @@
-const DOMAIN_URL = 'http://localhost:8080/api/v1/'
+const DOMAIN_URL = 'http://localhost:8082/api/v1/'
 
 export const logoutUrl = DOMAIN_URL + 'logout'
 export const loginUrl = DOMAIN_URL + 'login'
